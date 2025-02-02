@@ -82,7 +82,7 @@ export default defineNuxtConfig({
   umami: {
     id: process.env.UMAMI_ID,
     host: process.env.UMAMI_HOST,
-    domains: ["manyacg.top"],
+    domains: [process.env.UMAMI_DOMAIN || "manyacg.top"],
     autoTrack: true,
   },
 
