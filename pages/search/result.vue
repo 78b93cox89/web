@@ -26,17 +26,21 @@
 </template>
 
 <script lang="ts" setup>
-const route = useRoute();
-const keyword = route.query.q
-const hybird = route.query.hybrid === 'true'
-const similarTarget = route.query.similar_target
+const containerRef = ref<HTMLElement>();
+onMounted(() => {
+  if (containerRef.value) {
+    containerRef.value.style.height = window.innerHeight - 64 + "px";
+  }
+});
 
+const route = useRoute();
+const keyword = computed(() => route.query.q?.toString() || '');
+const hybird = computed(() => route.query.hybrid === 'true');
+const similarTarget = computed(() => route.query.similar_target?.toString() || '');
 if (!keyword && !similarTarget) {
   navigateTo('/search')
 }
-
-const titleText = ref(route.query.q ? `"${route.query.q}"的搜索结果` : `"${similarTarget}"的相似作品`);
-
+const titleText = computed(() => keyword.value ? `"${keyword.value}"的搜索结果` : `"${similarTarget.value}"的相似作品`);
 useSeoMeta({
   title: titleText.value,
   ogTitle: titleText.value + ' | ManyACG',
@@ -47,19 +51,25 @@ useSeoMeta({
   twitterCard: 'summary'
 })
 
-const containerRef = ref<HTMLElement>();
-onMounted(() => {
-  if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + "px";
-  }
-});
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
-  hybrid: hybird,
-  similarTarget: similarTarget?.toString() || '',
-  keyword: route.query.q?.toString() || '',
+  hybrid: hybird.value,
+  similarTarget: similarTarget.value,
+  keyword: keyword.value,
   mode: 'index',
 });
+
+
+watch(
+  [hybird, similarTarget, keyword],
+  () => {
+    // TODO: refactor this
+    if (import.meta.client) {
+      location.reload();
+    }
+  },
+  { deep: true }
+);
 
 if (result.errorMessage) {
   showError({ statusCode: result.statusCode, statusMessage: "找不到你要搜索的内容" })
