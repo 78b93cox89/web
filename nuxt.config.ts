@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     },
   },
   app: {
-    pageTransition: { name: "kawaii-bounce", mode: "out-in", appear: true },
+    pageTransition: { name: "fade", mode: "out-in" },
   },
   modules: [
     "@varlet/nuxt",

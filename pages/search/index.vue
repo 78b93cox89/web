@@ -42,11 +42,7 @@ const handleSearch = () => {
     })
     return
   }
-  navigateTo(`/search/result?q=${keyword.value}`, {
-    open: {
-      target: '_blank',
-    }
-  })
+  navigateTo(`/search/result?q=${keyword.value}`)
 }
 
 

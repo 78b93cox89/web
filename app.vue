@@ -2,7 +2,9 @@
   <NuxtLoadingIndicator :throttle="100" />
   <NuxtLayout>
     <div>
-      <NuxtPage keepalive />
+      <NuxtPage :keepalive="{
+        exclude: [/^result/]
+      }" />
     </div>
   </NuxtLayout>
 </template>
@@ -126,5 +128,17 @@ body {
   transform:
     translateY(-30px) scale(0.95);
   filter: blur(1.5px);
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>

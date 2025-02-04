@@ -28,11 +28,7 @@ const keyword = ref('')
 const hybird = ref(false)
 
 const handleSearch = () => {
-  navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`, {
-    open: {
-      target: '_blank'
-    }
-  })
+  navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`)
   show.value = false
 }
 

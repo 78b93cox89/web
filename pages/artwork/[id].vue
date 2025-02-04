@@ -86,6 +86,14 @@ import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
 import type { ArtworkDetailResponse, Picture } from '~/typing/artwork'
 
+definePageMeta({
+  pageTransition: {
+    name: "kawaii-bounce",
+    mode: "out-in",
+    appear: true
+  }
+})
+
 const route = useRoute()
 const artworkId = route.params.id as string
 
@@ -301,12 +309,9 @@ const previewImage = (index: number) => {
 const expandedTags = ref(false)
 
 const searchSimilar = () => {
-  navigateTo(`/search/result?similar_target=${artworkId}`, {
-    open: {
-      target: '_blank',
-    },
-  })
+  navigateTo(`/search/result?similar_target=${artworkId}`)
 }
+
 </script>
 
 <style scoped>
