@@ -16,6 +16,10 @@
       </var-input>
     </div>
 
+    <div class="search-tips">
+      <div style="font-size: larger;">AI 搜索</div>
+      <var-switch v-model="hybird" size="20" variant />
+    </div>
 
   </div>
 </template>
@@ -33,6 +37,7 @@ useSeoMeta({
 })
 
 const keyword = ref('')
+const hybird = ref(false)
 
 const handleSearch = () => {
   if (!keyword.value) {
@@ -42,7 +47,7 @@ const handleSearch = () => {
     })
     return
   }
-  navigateTo(`/search/result?q=${keyword.value}`)
+  navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`)
 }
 
 
@@ -79,5 +84,13 @@ const handleSearch = () => {
 .search-button {
   border-radius: 5px;
   cursor: pointer;
+}
+
+.search-tips {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2vh;
 }
 </style>
