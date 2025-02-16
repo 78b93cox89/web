@@ -4,22 +4,11 @@
       <h2>
         关于 ManyACG
       </h2>
-      <h3>1. 这是什么?</h3>
+      <h3>这是什么?</h3>
       <p>
         ManyACG 是1个个人向二次元图片分享网站, 所有图片都来自站长关注的画师&收藏, 不是随便爬取的哦 !
       </p>
-      <h3>2. 注册登录有什么用?</h3>
-      <p>
-        点赞暂时需要登录, 未来可能会移除限制. 其他没了.
-        <br />
-        因为此前我一直运营着一个 Telegram ACG 插画频道, 所以目前写了 Telegram 登录和 Email 登录.
-        <br />
-        关注 Telegram 频道 <var-link href="https://moreacg.t.me" class="link" target="_blank">@MoreACG</var-link>
-        可以第一时间看到新图
-        <br />
-        你问为什么频道叫 MoreACG 而不是 ManyACG ? 因为 ManyACG 已经被杜叔叔封了...
-      </p>
-      <h3>3. 搜索功能有什么用法</h3>
+      <h3>搜索功能有什么用法</h3>
       <p>
         作品相关的一切文本信息都会被搜索, 并支持使用逻辑参数, 格式如下:
         <br />
@@ -29,7 +18,10 @@
         <br />
         会搜索包含 <code>Miku</code> <b>或</b> <code>初音未来</code>, <b>且</b>包含 <code>双马尾</code> <b>或</b> <code>JK</code> 的图片
       </p>
-      <h3>4. 随机图片API</h3>
+      <p>
+        AI 搜索是根据图片标题, 描述, 标签等信息进行的混合搜索, 开启后, 逻辑参数会被忽略
+      </p>
+      <h3>随机图片API</h3>
       <p>
         直接跳转到图片: <br />
         <var-link href="https://manyacg.top/setu" class="link" target="_blank">manyacg.top/setu</var-link> (默认无R18)
@@ -41,6 +33,32 @@
         <var-link href="https://manyacg.top/api/v1/artwork/random" class="link"
           target="_blank">manyacg.top/api/v1/artwork/random</var-link>
       </p>
+      <h3>关注我们</h3>
+      <ul>
+        <li>
+          Telegram 频道 <var-link href="https://t.me/moreacg" class="link" target="_blank">@MoreACG</var-link>
+        </li>
+        <li>
+          后端开源地址 <var-link href="https://github.com/krau/ManyACG" class="link" target="_blank">GitHub:
+            krau/ManyACG</var-link>
+        </li>
+        <li>
+          前端开源地址 <var-link href="https://github.com/ManyACG/web" class="link" target="_blank">GitHub:
+            ManyACG/web</var-link>
+        </li>
+        <li>
+          <var-link href="https://manyacg.top/atom.xml" class="link" target="_blank">RSS 订阅</var-link>
+        </li>
+        <li>
+          <var-link href="https://app.follow.is/share/feeds/71961005897733120" class="link" target="_blank">Follow
+            订阅</var-link>
+        </li>
+      </ul>
+      <h3>友联申请</h3>
+      <p>
+        我们接受相似类型的网站友联申请, 请邮件联系: <var-link href="mailto:link@manyacg.top" class="link">link@manyacg.top</var-link>
+      </p>
+      <br />
     </div>
   </div>
 </template>

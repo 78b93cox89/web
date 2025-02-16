@@ -40,10 +40,10 @@
           <var-divider />
 
           <var-space direction="column" size="large">
-            <popup-menu-item icon-name="i-mdi:account-circle" text="登录" @click="showLoginDialog = true"
+            <!-- <popup-menu-item icon-name="i-mdi:account-circle" text="登录" @click="showLoginDialog = true"
               v-if="!loggedIn" />
             <popup-menu-item icon-name="i-mdi:account-circle" text="账号设定" @click="showPopup = false" to="/profile"
-              v-if="loggedIn" />
+              v-if="loggedIn" /> -->
             <popup-menu-item icon-name="i-mdi:fire" to="/random" @click="showPopup = false" text="随便看看" />
             <popup-menu-item icon-name="i-mdi:information-outline" to="/about" @click="showPopup = false" text="关于" />
           </var-space>
@@ -60,7 +60,7 @@
             <div class="divider-vertical-container">
               <var-link underline="none" :href="`https://t.me/moreacg`" target="_blank"
                 :text-color="linkColors.telegram">
-                TG频道
+                频道
               </var-link>
               <var-divider vertical />
               <var-link underline="none" :href="`https://krau.top`" target="_blank" :text-color="linkColors.blog">
@@ -94,31 +94,13 @@
 import { ref, computed } from 'vue'
 
 const showPopup = ref(false)
-const cookie = useCookie('TOKEN')
+// const cookie = useCookie('TOKEN')
 const showLoginDialog = ref(false)
 const showSearchDialog = ref(false)
-const loggedIn = computed(() => !!cookie.value)
+// const loggedIn = computed(() => !!cookie.value)
 
-const store = usePiniaStore()
-const linkColors = computed(() => {
-  if (store.preferLight) {
-    return {
-      telegram: '#2c6aa3',
-      blog: '#347985',
-      someacg: '#5a4e41',
-      moely: '#f724b9',
-      cosine: '#535177',
-    }
-  } else {
-    return {
-      telegram: '#7db7ff',
-      blog: '#39c5bb',
-      someacg: '#f3dcbd',
-      moely: '#f724b9',
-      cosine: '#8a85c5',
-    }
-  }
-})
+const linkColors = useLinkColors()
+
 
 const handleRSSClick = () => {
   navigateTo('/atom.xml', {
