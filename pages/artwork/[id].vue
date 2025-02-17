@@ -139,9 +139,10 @@ if (data.value) {
   useHead({
     title: `${artwork.value.title}`,
   })
-  const ogImageUrl = artwork.value.pictures[0].thumbnail.endsWith('.avif')
+  const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].thumbnail.endsWith('.avif')
     ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].thumbnail}&output=jpg`
-    : artwork.value.pictures[0].thumbnail
+    : artwork.value.pictures[0].thumbnail)
+
   useSeoMeta({
     description: `${artwork.value.description}`,
     ogTitle: `${artwork.value.title} | ManyACG`,

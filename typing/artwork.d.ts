@@ -46,6 +46,7 @@ export interface ArtworkDetailData {
   like_count: number;
   description: string;
   tags: string[];
+  r18: boolean;
   artist: {
     id: string;
     name: string;
