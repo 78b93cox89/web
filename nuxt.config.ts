@@ -1,3 +1,4 @@
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-01-11",
@@ -8,6 +9,7 @@ export default defineNuxtConfig({
     },
     apiBase: process.env.API_BASE,
   },
+
   routeRules: {
     "/api/v1/artwork/random": {
       redirect: `${process.env.API_BASE}/artwork/random`,

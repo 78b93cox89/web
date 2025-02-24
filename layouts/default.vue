@@ -87,12 +87,13 @@
     </ClientOnly>
 
     <slot />
+
+    <FabButton />
+
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-
 const showPopup = ref(false)
 // const cookie = useCookie('TOKEN')
 const showLoginDialog = ref(false)
