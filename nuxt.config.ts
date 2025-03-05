@@ -37,32 +37,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/fontaine",
     "pinia-plugin-persistedstate/nuxt",
-    "nuxt-booster",
   ],
-
-  booster: {
-    detection: {
-      performance: true,
-      browserSupport: true,
-      battery: true,
-    },
-    optimizeSSR: {
-      cleanPreloads: true,
-      cleanPrefetches: true,
-      inlineStyles: true,
-    },
-    performanceMetrics: {
-      timing: {
-        fcp: 800,
-        dcl: 1200,
-      },
-    },
-
-    lazyOffset: {
-      component: "0%",
-      asset: "0%",
-    },
-  },
 
   piniaPluginPersistedstate: {
     storage: "localStorage",
