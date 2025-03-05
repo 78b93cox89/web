@@ -71,9 +71,6 @@ importers:
       nuxt-api-party:
         specifier: ^2.1.2
         version: 2.1.2(magicast@0.3.5)(openapi-typescript@7.5.2(typescript@5.6.3))(rollup@4.31.0)
-      nuxt-booster:
-        specifier: ^3.1.11
-        version: 3.1.11(browserslist@4.24.4)(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.31.0)
       nuxt-umami:
         specifier: ^3.1.1
         version: 3.1.1(magicast@0.3.5)(rollup@4.31.0)
@@ -1447,10 +1444,6 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
-  argue-cli@2.1.0:
-    resolution: {integrity: sha512-dgojXfc4SiqmNwe38PnbT3zJasrz7g62dLAPD+VFT5RJb8W7LGRqw2IFd2ES+plnhsp4HYNJmFqMU1tCThdCww==}
-    engines: {node: '>=14.0.0'}
-
   array-union@2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
@@ -1547,13 +1540,6 @@ packages:
 
   brotli@1.3.3:
     resolution: {integrity: sha512-oTKjJdShmDuGW94SyyaoQvAjf30dZaHnjJ8uAF+u2/vGJkJbJPJAT1gDiOJP5v1Zb6f9KEyW/1HpuaWIXtGHPg==}
-
-  browserslist-useragent-regexp@4.1.3:
-    resolution: {integrity: sha512-+KteEIVlrE2eJOmtteWhcs3wYKjbFd9fVPzPlj4VGggKMyf9orf+zjmlNt91ekInZ2zqox5ArEZD/tKXDj0v9Q==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    peerDependencies:
-      browserslist: '>=4.0.0'
 
   browserslist@4.24.2:
     resolution: {integrity: sha512-ZIc+Q62revdMcqC6aChtW4jz3My3klmCO1fEmINZY/8J3EpBg5/A/D0AKmBveUh6pgoeycoMkVMko84tuYS+Gg==}
@@ -1677,10 +1663,6 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
-
-  clone@1.0.4:
-    resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
-    engines: {node: '>=0.8'}
 
   clone@2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
@@ -1958,9 +1940,6 @@ packages:
   default-passive-events@2.0.0:
     resolution: {integrity: sha512-eMtt76GpDVngZQ3ocgvRcNCklUMwID1PaNbCNxfpDXuiOXttSh0HzBbda1HU9SIUsDc02vb7g9+3I5tlqe/qMQ==}
 
-  defaults@1.0.4:
-    resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
-
   define-data-property@1.1.4:
     resolution: {integrity: sha512-rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==}
     engines: {node: '>= 0.4'}
@@ -2046,14 +2025,8 @@ packages:
   duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
 
-  dynamic-class-list@2.0.2:
-    resolution: {integrity: sha512-ajDeRg6UuGzmHB9zNd9/3vcvfRim/GqlsnaAcUIaKPlunKmRrK+Fi0M1BEalPH9HWHX6lyF6bZpuyuRXGGXbpw==}
-
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-
-  easy-table@1.2.0:
-    resolution: {integrity: sha512-OFzVOv03YpvtcWGe5AayU5G2hgybsg3iqA6drU8UaoZyB9jLGMTrz9+asnLp/E+6qPh88yEI1gvyZFZ41dmgww==}
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -2093,10 +2066,6 @@ packages:
 
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
-    engines: {node: '>=0.12'}
-
-  entities@6.0.0:
-    resolution: {integrity: sha512-aKstq2TDOndCn4diEyp9Uq/Flu2i1GlLkc6XIDQSDMuaFE3OPW5OphLCyQ5SpSJZTb4reN+kTcYru5yIfXoRPw==}
     engines: {node: '>=0.12'}
 
   error-stack-parser-es@0.1.5:
@@ -2426,9 +2395,6 @@ packages:
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
-
-  htmlparser2@10.0.0:
-    resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
   htmlparser2@9.1.0:
     resolution: {integrity: sha512-5zfg6mHUoaer/97TxnGpxmbR7zJtPwIYFMZ/H5ucTlPZhKvtum05yiPK3Mgai3a0DyVxv7qYqoweaEd2nrYQzQ==}
@@ -2987,9 +2953,6 @@ packages:
     peerDependencies:
       openapi-typescript: ^5 || ^6 || ^7
 
-  nuxt-booster@3.1.11:
-    resolution: {integrity: sha512-nTmJq7ab+zM+Q2iLzXvm+uC5zRlZNsXhozh1jDp05zDnjS3FGlFpYHLtdnZL670anRDOKhK765Ycnjqb0xWJtA==}
-
   nuxt-link-checker@4.1.0:
     resolution: {integrity: sha512-z16I1tXTriyxjL1Hm1ydaXCrhodY0QhKfdZE52Q4icLxR/pcegJ4lxhrNUnTGTCtT8ITN9t2GnaKbL/VJ67nfw==}
 
@@ -3164,9 +3127,6 @@ packages:
 
   pathe@2.0.2:
     resolution: {integrity: sha512-15Ztpk+nov8DR524R4BF7uEuzESgzUEAV4Ah7CUMNGXdE5ELuvxElxGXndBl32vMSsWa1jpNf22Z+Er3sKwq+w==}
-
-  pathe@2.0.3:
-    resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
 
   perfect-debounce@1.0.0:
     resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
@@ -4048,10 +4008,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  ua-regexes-lite@1.2.1:
-    resolution: {integrity: sha512-ling4WX4ZtxXjmSMHzuI8PGos2brw/6gG3YuVWn5RunHoQjeCokpFeMe/ti+R8E7kOTLE2FqBG4bMdFQLFwcJQ==}
-    engines: {node: '>=14'}
-
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
 
@@ -4421,9 +4377,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  wcwidth@1.0.1:
-    resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -6240,8 +6193,6 @@ snapshots:
 
   argparse@2.0.1: {}
 
-  argue-cli@2.1.0: {}
-
   array-union@2.1.0: {}
 
   ast-kit@1.4.0:
@@ -6351,15 +6302,6 @@ snapshots:
   brotli@1.3.3:
     dependencies:
       base64-js: 1.5.1
-
-  browserslist-useragent-regexp@4.1.3(browserslist@4.24.4):
-    dependencies:
-      argue-cli: 2.1.0
-      browserslist: 4.24.4
-      easy-table: 1.2.0
-      picocolors: 1.1.1
-      regexp-tree: 0.1.27
-      ua-regexes-lite: 1.2.1
 
   browserslist@4.24.2:
     dependencies:
@@ -6536,9 +6478,6 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
-
-  clone@1.0.4:
-    optional: true
 
   clone@2.1.2: {}
 
@@ -6781,11 +6720,6 @@ snapshots:
 
   default-passive-events@2.0.0: {}
 
-  defaults@1.0.4:
-    dependencies:
-      clone: 1.0.4
-    optional: true
-
   define-data-property@1.1.4:
     dependencies:
       es-define-property: 1.0.0
@@ -6850,15 +6784,7 @@ snapshots:
 
   duplexer@0.1.2: {}
 
-  dynamic-class-list@2.0.2: {}
-
   eastasianwidth@0.2.0: {}
-
-  easy-table@1.2.0:
-    dependencies:
-      ansi-regex: 5.0.1
-    optionalDependencies:
-      wcwidth: 1.0.1
 
   ee-first@1.1.1: {}
 
@@ -6892,8 +6818,6 @@ snapshots:
       tapable: 2.2.1
 
   entities@4.5.0: {}
-
-  entities@6.0.0: {}
 
   error-stack-parser-es@0.1.5: {}
 
@@ -7308,13 +7232,6 @@ snapshots:
   hookable@5.5.3: {}
 
   html-tags@3.3.1: {}
-
-  htmlparser2@10.0.0:
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      domutils: 3.2.2
-      entities: 6.0.0
 
   htmlparser2@9.1.0:
     dependencies:
@@ -7948,44 +7865,6 @@ snapshots:
       - rollup
       - supports-color
 
-  nuxt-booster@3.1.11(browserslist@4.24.4)(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.31.0):
-    dependencies:
-      '@nuxt/image': 1.9.0(db0@0.2.1)(ioredis@5.4.2)(magicast@0.3.5)(rollup@4.31.0)
-      '@nuxtjs/fontaine': 0.4.4(magicast@0.3.5)(rollup@4.31.0)
-      browserslist-useragent-regexp: 4.1.3(browserslist@4.24.4)
-      cheerio: 1.0.0
-      defu: 6.1.4
-      dom-serializer: 2.0.0
-      dynamic-class-list: 2.0.2
-      htmlparser2: 10.0.0
-      image-meta: 0.2.1
-      mime-types: 2.1.35
-      pathe: 2.0.3
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/kv'
-      - aws4fetch
-      - browserslist
-      - db0
-      - encoding
-      - idb-keyval
-      - ioredis
-      - magicast
-      - rollup
-      - supports-color
-      - uploadthing
-
   nuxt-link-checker@4.1.0(magicast@0.3.5)(rollup@4.31.0)(typescript@5.6.3)(vite@6.0.11(@types/node@22.10.10)(jiti@2.4.2)(sass-embedded@1.83.4)(terser@5.37.0)(yaml@2.7.0))(vue@3.5.13(typescript@5.6.3)):
     dependencies:
       '@nuxt/devtools-kit': 2.0.0-beta.3(magicast@0.3.5)(rollup@4.31.0)(vite@6.0.11(@types/node@22.10.10)(jiti@2.4.2)(sass-embedded@1.83.4)(terser@5.37.0)(yaml@2.7.0))
@@ -8402,8 +8281,6 @@ snapshots:
   pathe@2.0.0: {}
 
   pathe@2.0.2: {}
-
-  pathe@2.0.3: {}
 
   perfect-debounce@1.0.0: {}
 
@@ -9330,8 +9207,6 @@ snapshots:
 
   typescript@5.6.3: {}
 
-  ua-regexes-lite@1.2.1: {}
-
   ufo@1.5.4: {}
 
   ultrahtml@1.5.3: {}
@@ -9698,11 +9573,6 @@ snapshots:
       '@vue/shared': 3.5.13
     optionalDependencies:
       typescript: 5.6.3
-
-  wcwidth@1.0.1:
-    dependencies:
-      defaults: 1.0.4
-    optional: true
 
   webidl-conversions@3.0.1: {}
 
