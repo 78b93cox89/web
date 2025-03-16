@@ -110,7 +110,7 @@ const adjustPictureSize = (picture: Picture) => {
 
 }
 
-const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId) || null)
+const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId))
 
 const downloadAvailable = ref(false)
 const pictureRegularUrls = computed(() =>
@@ -118,23 +118,19 @@ const pictureRegularUrls = computed(() =>
 )
 
 if (artwork.value === null) {
-  const { data, error } = await useAcgapiData<ArtworkDetailResponse>(`/artwork/${artworkId}`)
-  if (error.value) {
-    if (error.value.statusCode === 401) {
-      throw createError({
-        statusCode: 401,
-        message: '这个作品需要登录后才能查看哦',
-      })
+  try {
+    const data = await $acgapi<ArtworkDetailResponse>(`/artwork/${artworkId}`)
+    if (data.status === 200) {
+      artwork.value = data.data
+      downloadAvailable.value = true
     }
+  } catch {
     throw createError({
-      statusCode: error.value.statusCode || 500,
-      message: error.value.message || '未知错误',
+      status: 500,
+      statusMessage: "获取作品失败"
     })
   }
-  if (data.value) {
-    artwork.value = data.value.data
-    downloadAvailable.value = true
-  }
+
 } else {
   downloadAvailable.value = true
 }
