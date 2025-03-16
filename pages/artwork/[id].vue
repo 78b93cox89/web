@@ -117,7 +117,7 @@ const pictureRegularUrls = computed(() =>
   artwork.value?.pictures.map((picture) => picture.regular)
 )
 
-if (!artwork.value) {
+if (artwork.value === null) {
   const { data, error } = await useAcgapiData<ArtworkDetailResponse>(`/artwork/${artworkId}`)
   if (error.value) {
     if (error.value.statusCode === 401) {
