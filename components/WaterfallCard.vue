@@ -1,28 +1,25 @@
 <template>
   <var-paper ripple class="card">
-    <var-button round variant="text" class="action-button" @click="previewImage" color="transparent" title="Preview">
-      <var-icon name="magnify-plus-outline" />
-    </var-button>
-    <var-link :data-id="item.id" class="card-content" :to="`/artwork/${item.id}`" underline="none" rel="prefetch">
+    <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
       <div class="cover">
         <Transition>
-          <NuxtImg :src="item.thumbnail" :alt="item.title" class="img" v-if="loaded" />
+          <NuxtImg :src="item.detail.pictures[0].thumbnail" :alt="item.detail.title" class="img" v-if="loaded" />
         </Transition>
       </div>
       <div class="overlay">
         <div class="card-body">
-          <h3>{{ item.title }}</h3>
+          <h3>{{ item.detail.title }}</h3>
           <div class="author">
-            {{ item.artist_name }}
+            {{ item.detail.artist.name }}
           </div>
         </div>
       </div>
-    </var-link>
+    </div>
   </var-paper>
 </template>
 
 <script setup lang="ts">
-import { ImagePreview } from '@varlet/ui';
+import type { WaterfallItem } from '~/typing/waterfall';
 const props = withDefaults(
   defineProps<{
     item: WaterfallItem;
@@ -53,18 +50,10 @@ onBeforeMount(() => {
         resolve(true);
       };
 
-      image.src = props.item.thumbnail;
+      image.src = props.item.detail.pictures[0].thumbnail;
     });
   }
 });
-
-const previewImage = () => {
-  ImagePreview({
-    images: [props.item.regular],
-    closeable: true,
-    closeOnKeyEscape: true,
-  });
-}
 
 </script>
 

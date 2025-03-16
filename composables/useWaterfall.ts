@@ -1,10 +1,19 @@
-import { reactive, h, onMounted, onUnmounted, watchEffect } from "vue";
+import {
+  reactive,
+  h,
+  onMounted,
+  onUnmounted,
+  watchEffect,
+  onActivated,
+  onDeactivated,
+} from "vue";
 import { render } from "vue";
 import WaterfallCard from "@/components/WaterfallCard.vue";
 import { Snackbar } from "@varlet/ui";
 import { useDebounceFn } from "@vueuse/core";
 import { useWaterfallGap } from "@/composables/useWaterfallGap";
 import type { ArtworkListResponse } from "~/typing/artwork";
+import type { WaterfallItem } from "~/typing/waterfall";
 
 function getRealHeight(item: WaterfallItem, realWidth: number) {
   if (typeof window === "undefined") {
@@ -57,7 +66,11 @@ const useWaterfall = ({
     if (!waterfallOption.onlyImage && typeof window !== "undefined") {
       extraHeight = getRealHeight(item, itemWidth);
     }
-    return item.height * (itemWidth / item.width) + extraHeight;
+    return (
+      item.detail.pictures[0].height *
+        (itemWidth / item.detail.pictures[0].width) +
+      extraHeight
+    );
   };
 
   const fetchParams = reactive({
@@ -67,7 +80,7 @@ const useWaterfall = ({
     tag: tag,
     r18: usePiniaStore().r18 ? 2 : 0,
     limit: 30,
-    simple: true,
+    // simple: true,
     keyword: keyword,
     hybrid: hybrid,
     similar_target: similarTarget,
@@ -82,13 +95,16 @@ const useWaterfall = ({
 
   const apiEndpoint = mode === "random" ? "/artwork/random" : "/artwork/list";
 
-  const { data, status, error } = useAcgapiData<ArtworkListResponse>(apiEndpoint, {
-    method: "GET",
-    query: fetchParams,
-    onResponse({ response }) {
-      result.statusCode = response.status;
-    },
-  });
+  const { data, status, error } = useAcgapiData<ArtworkListResponse>(
+    apiEndpoint,
+    {
+      method: "GET",
+      query: fetchParams,
+      onResponse({ response }) {
+        result.statusCode = response.status;
+      },
+    }
+  );
 
   watchEffect(() => {
     if (error.value) {
@@ -110,13 +126,7 @@ const useWaterfall = ({
       for (const artwork of data.value.data) {
         const item: WaterfallItem = {
           id: artwork.id,
-          title: artwork.title,
-          source_url: artwork.source_url,
-          artist_name: artwork.artist.name,
-          width: artwork.pictures[0].width,
-          height: artwork.pictures[0].height,
-          thumbnail: artwork.pictures[0].thumbnail,
-          regular: artwork.pictures[0].regular,
+          detail: artwork,
         };
         result.list.push(item);
       }
@@ -145,11 +155,11 @@ const useWaterfall = ({
 
   const scrollHandler = useDebounceFn(checkScrollPosition, 125);
 
-  onMounted(() => {
+  onActivated(() => {
     window.addEventListener("scroll", scrollHandler);
   });
 
-  onUnmounted(() => {
+  onDeactivated(() => {
     window.removeEventListener("scroll", scrollHandler);
   });
 

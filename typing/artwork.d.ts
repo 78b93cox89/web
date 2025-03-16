@@ -1,5 +1,3 @@
-// typing/artwork.d.ts
-
 export interface BaseResponse<T = any> {
   status: number;
   message: string;
@@ -8,6 +6,7 @@ export interface BaseResponse<T = any> {
 
 export interface Picture {
   id: string;
+  index: number;
   width: number;
   height: number;
   file_name: string;
@@ -18,16 +17,26 @@ export interface Picture {
 export interface Artwork {
   id: string;
   title: string;
+  description: string;
   source_url: string;
+  r18: boolean;
+  like_count: number;
+  tags: string[];
   artist: {
+    id: string;
+    name: string;
+    type: string;
+    username: string;
+    uid: string;
     name: string;
   };
+  source_type: string;
   pictures: Picture[];
 }
 
-export interface ArtworkListResponse extends BaseResponse<Artwork[]> { }
+export interface ArtworkListResponse extends BaseResponse<Artwork[]> {}
 
-export interface CountResponse extends BaseResponse<number> { }
+export interface CountResponse extends BaseResponse<number> {}
 
 export interface Artist {
   id: string;
@@ -37,32 +46,15 @@ export interface Artist {
   uid: number;
 }
 
-export interface ArtistResponse extends BaseResponse<Artist> { }
+export interface ArtistResponse extends BaseResponse<Artist> {}
 
-export interface ArtworkDetailData {
-  id: string;
-  title: string;
-  source_url: string;
-  like_count: number;
-  description: string;
-  tags: string[];
-  r18: boolean;
-  artist: {
-    id: string;
-    name: string;
-    username: string;
-  };
-  source_type: string;
-  pictures: Picture[];
-}
-
-export interface ArtworkDetailResponse extends BaseResponse<ArtworkDetailData> { }
+export interface ArtworkDetailResponse extends BaseResponse<Artwork> {}
 
 export interface Tag {
   name: string;
 }
 
-export interface TagListResponse extends BaseResponse<Tag[]> { }
+export interface TagListResponse extends BaseResponse<Tag[]> {}
 
 export interface ArtworkListRequest {
   page: number;
@@ -70,4 +62,4 @@ export interface ArtworkListRequest {
   artist_id?: string;
 }
 
-export interface LikeStatusResponse extends BaseResponse<boolean> { }
+export interface LikeStatusResponse extends BaseResponse<boolean> {}

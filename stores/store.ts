@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
+import type { Artwork } from "~/typing/artwork";
 
-export const usePiniaStore = defineStore({
-  id: "ManyACG",
+export const usePiniaStore = defineStore("ManyACG", {
   state: () => ({
     preferLight: false,
     r18: false,
@@ -15,4 +15,31 @@ export const usePiniaStore = defineStore({
     },
   },
   persist: true,
+});
+
+export const useArtworkStore = defineStore("Artwork", {
+  state: () => ({
+    artworks: {} as Record<string, Artwork>,
+    maxCacheSize: 50,
+  }),
+  actions: {
+    addArtwork(artwork: Artwork) {
+      const id = artwork.id;
+      this.artworks[id] = artwork;
+    },
+    getArtwork(id: string) {
+      const artwork = this.artworks[id];
+      if (Object.keys(this.artworks).length > this.maxCacheSize) {
+        this.clearArtworks();
+      }
+      return artwork || null;
+    },
+    clearArtworks() {
+      this.artworks = {};
+    },
+    removeArtwork(id: string) {
+      if (!this.artworks[id]) return;
+      delete this.artworks[id];
+    },
+  },
 });

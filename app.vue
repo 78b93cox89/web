@@ -85,7 +85,7 @@ body {
   background-position: center;
   background-color: hsla(var(--hsl-body), 0.99);
   background-blend-mode: overlay;
-  transition: background-color 0.2s ease, background-image 0.2s ease-in-out 0.5s;
+  transition: background-color 0.2s ease;
   color: var(--color-text);
   overflow-x: hidden;
   overflow-y: scroll;

@@ -68,10 +68,6 @@
             </div>
           </div>
         </div>
-
-        <ClientOnly>
-          <acg-footer />
-        </ClientOnly>
       </div>
     </Transition>
   </div>
@@ -84,7 +80,7 @@ import fileSaver from 'file-saver'
 const { saveAs } = fileSaver
 import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
-import type { ArtworkDetailResponse, Picture } from '~/typing/artwork'
+import type { Artwork, ArtworkDetailResponse, Picture } from '~/typing/artwork'
 
 definePageMeta({
   pageTransition: {
@@ -95,6 +91,7 @@ definePageMeta({
 })
 
 const route = useRoute()
+const artworkStore = useArtworkStore()
 const artworkId = route.params.id as string
 
 const adjustPictureSize = (picture: ArtworkDetailResponse['data']['pictures'][0]) => {
@@ -112,49 +109,53 @@ const adjustPictureSize = (picture: ArtworkDetailResponse['data']['pictures'][0]
   }
 }
 
-const artwork = ref<ArtworkDetailResponse['data']>()
+const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId) || null)
+
 const downloadAvailable = ref(false)
 const pictureRegularUrls = computed(() =>
   artwork.value?.pictures.map((picture) => picture.regular)
 )
 
-const { data, error } = await useAcgapiData<ArtworkDetailResponse>(`/artwork/${artworkId}`)
-
-if (error.value) {
-  if (error.value.statusCode === 401) {
+if (!artwork.value) {
+  const { data, error } = await useAcgapiData<ArtworkDetailResponse>(`/artwork/${artworkId}`)
+  if (error.value) {
+    if (error.value.statusCode === 401) {
+      throw createError({
+        statusCode: 401,
+        message: '这个作品需要登录后才能查看哦',
+      })
+    }
     throw createError({
-      statusCode: 401,
-      message: '这个作品需要登录后才能查看哦',
+      statusCode: error.value.statusCode || 500,
+      message: error.value.message || '未知错误',
     })
   }
-  throw createError({
-    statusCode: error.value.statusCode || 500,
-    message: error.value.message || '未知错误',
-  })
-}
-
-if (data.value) {
-  artwork.value = data.value.data
+  if (data.value) {
+    artwork.value = data.value.data
+    downloadAvailable.value = true
+  }
+} else {
   downloadAvailable.value = true
-  useHead({
-    title: `${artwork.value.title}`,
-  })
-  const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].thumbnail.endsWith('.avif')
-    ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].thumbnail}&output=jpg`
-    : artwork.value.pictures[0].thumbnail)
-
-  useSeoMeta({
-    description: `${artwork.value.description}`,
-    ogTitle: `${artwork.value.title} | ManyACG`,
-    ogDescription: `${artwork.value.description}`,
-    ogImage: ogImageUrl,
-    ogType: 'article',
-    twitterCard: 'summary_large_image',
-    twitterTitle: `${artwork.value.title} | ManyACG`,
-    twitterDescription: `${artwork.value.description}`,
-    twitterImage: ogImageUrl,
-  })
 }
+
+useHead({
+  title: `${artwork.value.title}`,
+})
+const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].thumbnail.endsWith('.avif')
+  ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].thumbnail}&output=jpg`
+  : artwork.value.pictures[0].thumbnail)
+
+useSeoMeta({
+  description: `${artwork.value.description}`,
+  ogTitle: `${artwork.value.title} | ManyACG`,
+  ogDescription: `${artwork.value.description}`,
+  ogImage: ogImageUrl,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: `${artwork.value.title} | ManyACG`,
+  twitterDescription: `${artwork.value.description}`,
+  twitterImage: ogImageUrl,
+})
 
 const loading = ref(true)
 const imageLoad = (index: number) => {
