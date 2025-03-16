@@ -31,8 +31,6 @@ const handleHover = (isHovering: boolean) => {
 .chip {
   cursor: pointer;
   background-color: transparent;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
   font-weight: bolder;
   transition: background-color 0.2s ease;
 }
