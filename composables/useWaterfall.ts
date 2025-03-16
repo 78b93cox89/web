@@ -3,7 +3,6 @@ import { render } from "vue";
 import WaterfallCard from "@/components/WaterfallCard.vue";
 import { Snackbar } from "@varlet/ui";
 import { useDebounceFn } from "@vueuse/core";
-import { useWaterfallGap } from "@/composables/useWaterfallGap";
 import type { ArtworkListResponse } from "~/typing/artwork";
 import type { WaterfallItem } from "~/typing/waterfall";
 
@@ -153,6 +152,18 @@ const useWaterfall = ({
 
   onDeactivated(() => {
     window.removeEventListener("scroll", scrollHandler);
+  });
+
+  onMounted(() => {
+    if (import.meta.client) {
+      window.addEventListener("scroll", scrollHandler);
+    }
+  });
+
+  onBeforeUnmount(() => {
+    if (import.meta.client) {
+      window.removeEventListener("scroll", scrollHandler);
+    }
   });
 
   return {
