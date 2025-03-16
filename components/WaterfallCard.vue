@@ -1,5 +1,5 @@
 <template>
-  <var-paper ripple class="card">
+  <var-paper ripple class="card" @click="handleCardClick(item)">
     <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
       <div class="cover">
         <Transition>
@@ -54,6 +54,15 @@ onBeforeMount(() => {
     });
   }
 });
+
+
+const handleCardClick = (item: WaterfallItem) => {
+  useArtworkStore().addArtwork(item.detail);
+  navigateTo({
+    path: `/artwork/${item.id}`
+  });
+};
+
 
 </script>
 

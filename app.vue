@@ -133,7 +133,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.2s;
+  transition: all 0.1s;
 }
 
 .fade-enter-from,

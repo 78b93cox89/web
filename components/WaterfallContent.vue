@@ -6,7 +6,7 @@
       :max-column-count="waterfallOption.maxColumnCount" :min-column-count="waterfallOption.minColumnCount"
       :calc-item-height="calcItemHeight" :items="result.list">
       <template #default="scope">
-        <WaterfallCard v-if="scope?.item" :item="scope.item" @click="handleCardClick(scope.item)" />
+        <WaterfallCard v-if="scope?.item" :item="scope.item" />
       </template>
     </VirtualWaterfall>
     <ClientOnly>
@@ -20,8 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { WaterfallItem } from '~/typing/waterfall';
-
 const props = withDefaults(defineProps<{
   mode: "random" | "index";
 }>(), {
@@ -50,14 +48,6 @@ const tipText = computed(() => {
   return "正在加载, 别急 §(*￣▽￣*)§";
 });
 
-const artworkStore = useArtworkStore();
-
-const handleCardClick = (item: WaterfallItem) => {
-  artworkStore.addArtwork(item.detail);
-  navigateTo({
-    path: `/artwork/${item.id}`
-  });
-};
 
 </script>
 
