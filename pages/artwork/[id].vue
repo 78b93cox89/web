@@ -94,7 +94,7 @@ const route = useRoute()
 const artworkStore = useArtworkStore()
 const artworkId = route.params.id as string
 
-const adjustPictureSize = (picture: ArtworkDetailResponse['data']['pictures'][0]) => {
+const adjustPictureSize = (picture: Picture) => {
   const ratio = picture.width / picture.height
   if (ratio > 1) {
     return {
@@ -107,6 +107,7 @@ const adjustPictureSize = (picture: ArtworkDetailResponse['data']['pictures'][0]
       height: 'auto',
     }
   }
+
 }
 
 const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId) || null)
@@ -334,10 +335,6 @@ const searchSimilar = () => {
   gap: 20px;
 }
 
-.need-login-result {
-  flex: 1;
-  max-width: 70%;
-}
 
 .artwork-pictures {
   flex: 1;
