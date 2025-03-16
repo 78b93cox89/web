@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-const containerRef = ref<HTMLElement>();
+const containerRef = ref<HTMLElement | null>(null);
 onMounted(() => {
   if (containerRef.value) {
     containerRef.value.style.height = window.innerHeight - 64 + "px";

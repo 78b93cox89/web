@@ -1,12 +1,4 @@
-import {
-  reactive,
-  h,
-  onMounted,
-  onUnmounted,
-  watchEffect,
-  onActivated,
-  onDeactivated,
-} from "vue";
+import { reactive, h, watchEffect, onActivated, onDeactivated } from "vue";
 import { render } from "vue";
 import WaterfallCard from "@/components/WaterfallCard.vue";
 import { Snackbar } from "@varlet/ui";
