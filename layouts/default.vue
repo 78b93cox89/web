@@ -80,6 +80,9 @@
                 :text-color="linkColors.cosine">
                 Cosine 🎨 Gallery
               </var-link>
+              <var-link underline="none" :href="`https://www.chooiin.com`" target="_blank">
+                初音导航
+              </var-link>
             </div>
           </div>
         </div>
