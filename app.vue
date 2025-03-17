@@ -2,9 +2,7 @@
   <NuxtLoadingIndicator :throttle="100" />
   <NuxtLayout>
     <div>
-      <NuxtPage :keepalive="{
-        exclude: [/^result/]
-      }" />
+      <NuxtPage keepalive />
     </div>
   </NuxtLayout>
 </template>

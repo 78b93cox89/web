@@ -154,18 +154,6 @@ const useWaterfall = ({
     window.removeEventListener("scroll", scrollHandler);
   });
 
-  onMounted(() => {
-    if (import.meta.client) {
-      window.addEventListener("scroll", scrollHandler);
-    }
-  });
-
-  onBeforeUnmount(() => {
-    if (import.meta.client) {
-      window.removeEventListener("scroll", scrollHandler);
-    }
-  });
-
   return {
     waterfallOption,
     result,
