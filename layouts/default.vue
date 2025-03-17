@@ -18,7 +18,10 @@
           <var-button text color="transparent" @click="handleRSSClick" title="RSS">
             <Icon name="i-line-md:rss" size="24" />
           </var-button>
-          <color-change-menu />
+          <!-- <color-change-menu /> -->
+          <var-button text color="transparent" @click="handleChangeTheme" title="切换主题">
+            <Icon :name="themeIcon" size="24" />
+          </var-button>
         </template>
       </var-app-bar>
 
@@ -85,6 +88,7 @@
                 初音导航
               </var-link>
             </div>
+
           </div>
         </div>
       </var-popup>
@@ -115,6 +119,19 @@ const handleRSSClick = () => {
     }
   })
 }
+
+const handleChangeTheme = () => {
+  const piniaStore = usePiniaStore()
+  const currentTheme = piniaStore.preferLight
+  StyleProvider(currentTheme ? darkTheme : lightTheme)
+  piniaStore.setpreferLight(!currentTheme)
+}
+
+const themeIcon = computed(() => {
+  const piniaStore = usePiniaStore()
+  return !piniaStore.preferLight ? 'i-line-md:sunny-filled' : 'i-line-md:moon-filled'
+})
+
 </script>
 
 <style scoped>
