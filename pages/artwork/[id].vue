@@ -138,9 +138,9 @@ if (artwork.value === null) {
 useHead({
   title: `${artwork.value.title}`,
 })
-const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].thumbnail.endsWith('.avif')
-  ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].thumbnail}&output=jpg`
-  : artwork.value.pictures[0].thumbnail)
+const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].regular.endsWith('.avif')
+  ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].regular}&output=jpg`
+  : artwork.value.pictures[0].regular)
 
 useSeoMeta({
   description: `${artwork.value.description}`,
