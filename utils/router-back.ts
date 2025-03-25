@@ -1,7 +1,7 @@
 export const routerBack = () => {
   if (history.length > 1) {
-    useRouter().back();
+    useRouter().back()
   } else {
-    navigateTo("/");
+    navigateTo('/')
   }
-};
+}

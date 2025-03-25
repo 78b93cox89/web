@@ -7,7 +7,13 @@
       <var-app-bar title-position="center" :fixed="true" :placeholder="true">
         <var-link text-color="#fff" underline="none" text-size="large" to="/">ManyACG</var-link>
         <template #left>
-          <var-button color="transparent" text-color="#fff" text @click="showPopup = true" title="菜单">
+          <var-button
+            color="transparent"
+            text-color="#fff"
+            text
+            @click="showPopup = true"
+            title="菜单"
+          >
             <var-icon name="menu" size="24" />
           </var-button>
           <var-button text color="transparent" @click="showSearchDialog = true" title="搜索">
@@ -47,13 +53,23 @@
               v-if="!loggedIn" />
             <popup-menu-item icon-name="i-mdi:account-circle" text="账号设定" @click="showPopup = false" to="/profile"
               v-if="loggedIn" /> -->
-            <popup-menu-item icon-name="i-mdi:fire" to="/random" @click="showPopup = false" text="随便看看" />
-            <popup-menu-item icon-name="i-mdi:information-outline" to="/about" @click="showPopup = false" text="关于" />
+            <popup-menu-item
+              icon-name="i-mdi:fire"
+              to="/random"
+              @click="showPopup = false"
+              text="随便看看"
+            />
+            <popup-menu-item
+              icon-name="i-mdi:information-outline"
+              to="/about"
+              @click="showPopup = false"
+              text="关于"
+            />
           </var-space>
 
-          <div style="position: absolute; bottom: 0; width: 100%; margin-bottom: 20px;">
+          <div style="position: absolute; bottom: 0; width: 100%; margin-bottom: 20px">
             <var-divider>
-              <div style="text-align: center; margin: 0 16px 8px;">
+              <div style="text-align: center; margin: 0 16px 8px">
                 <var-tooltip content="申请友联请联系 link@manyacg.top" placement="right-end">
                   友情链接
                 </var-tooltip>
@@ -61,26 +77,47 @@
             </var-divider>
 
             <div class="divider-vertical-container">
-              <var-link underline="none" :href="`https://t.me/moreacg`" target="_blank"
-                :text-color="linkColors.telegram">
+              <var-link
+                underline="none"
+                :href="`https://t.me/moreacg`"
+                target="_blank"
+                :text-color="linkColors.telegram"
+              >
                 频道
               </var-link>
               <var-divider vertical />
-              <var-link underline="none" :href="`https://krau.top`" target="_blank" :text-color="linkColors.blog">
+              <var-link
+                underline="none"
+                :href="`https://krau.top`"
+                target="_blank"
+                :text-color="linkColors.blog"
+              >
                 Blog
               </var-link>
               <var-divider vertical />
-              <var-link underline="none" :href="`https://www.someacg.top`" target="_blank"
-                :text-color="linkColors.someacg">
+              <var-link
+                underline="none"
+                :href="`https://www.someacg.top`"
+                target="_blank"
+                :text-color="linkColors.someacg"
+              >
                 SomeACG
               </var-link>
               <var-divider vertical />
-              <var-link underline="none" :href="`https://www.moely.link/`" target="_blank"
-                :text-color="linkColors.moely">
+              <var-link
+                underline="none"
+                :href="`https://www.moely.link/`"
+                target="_blank"
+                :text-color="linkColors.moely"
+              >
                 萌哩
               </var-link>
-              <var-link underline="none" :href="`https://pic.cosine.ren/`" target="_blank"
-                :text-color="linkColors.cosine">
+              <var-link
+                underline="none"
+                :href="`https://pic.cosine.ren/`"
+                target="_blank"
+                :text-color="linkColors.cosine"
+              >
                 Cosine 🎨 Gallery
               </var-link>
               <var-divider vertical />
@@ -88,7 +125,6 @@
                 初音导航
               </var-link>
             </div>
-
           </div>
         </div>
       </var-popup>
@@ -97,7 +133,6 @@
     <slot />
 
     <FabButton />
-
   </div>
 </template>
 
@@ -109,7 +144,6 @@ const showSearchDialog = ref(false)
 // const loggedIn = computed(() => !!cookie.value)
 
 const linkColors = useLinkColors()
-
 
 const handleRSSClick = () => {
   navigateTo('/atom.xml', {
@@ -131,7 +165,6 @@ const themeIcon = computed(() => {
   const piniaStore = usePiniaStore()
   return !piniaStore.preferLight ? 'i-line-md:sunny-filled' : 'i-line-md:moon-filled'
 })
-
 </script>
 
 <style scoped>

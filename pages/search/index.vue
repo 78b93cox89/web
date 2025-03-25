@@ -6,8 +6,14 @@
     </div>
 
     <div class="searchbar">
-      <var-input type="text" placeholder="输入关键词搜索" class="search-input" variant="outlined" v-model="keyword"
-        @keydown.enter="handleSearch">
+      <var-input
+        type="text"
+        placeholder="输入关键词搜索"
+        class="search-input"
+        variant="outlined"
+        v-model="keyword"
+        @keydown.enter="handleSearch"
+      >
         <template #append-icon>
           <var-button @click="handleSearch" class="search-button" type="primary" size="large">
             搜索
@@ -17,15 +23,14 @@
     </div>
 
     <div class="search-tips">
-      <div style="font-size: larger;">AI 搜索</div>
+      <div style="font-size: larger">AI 搜索</div>
       <var-switch v-model="hybird" size="20" variant />
     </div>
-
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Snackbar } from "@varlet/ui"
+import { Snackbar } from '@varlet/ui'
 useSeoMeta({
   title: '搜索',
   ogTitle: '搜索 | ManyACG',
@@ -43,14 +48,12 @@ const handleSearch = () => {
   if (!keyword.value) {
     Snackbar({
       content: '请输入要搜索的内容~',
-      type: "error"
+      type: 'error'
     })
     return
   }
   navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`)
 }
-
-
 </script>
 
 <style scoped>

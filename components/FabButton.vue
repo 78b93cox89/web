@@ -2,7 +2,7 @@
   <client-only>
     <var-fab drag position="right-bottom" type="primary" title="操作菜单">
       <var-button @click="toggleAutoScroll" title="自动滚动" type="primary">
-        <Icon name=i-line-md:play v-if="!isAutoScrolling" />
+        <Icon name="i-line-md:play" v-if="!isAutoScrolling" />
         <Icon name="i-line-md:pause" v-else />
       </var-button>
     </var-fab>

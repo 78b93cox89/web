@@ -1,6 +1,6 @@
-import type { Artwork } from "./artwork";
+import type { Artwork } from './artwork'
 
 declare interface WaterfallItem {
-  id: string;
-  detail: Artwork;
+  id: string
+  detail: Artwork
 }

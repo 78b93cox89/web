@@ -1,12 +1,24 @@
 <template>
   <div>
-    <var-dialog title="登录" v-model:show="show" @before-close="beforeClose" :lock-scroll="false"
-      :close-on-click-overlay="false">
+    <var-dialog
+      title="登录"
+      v-model:show="show"
+      @before-close="beforeClose"
+      :lock-scroll="false"
+      :close-on-click-overlay="false"
+    >
       <var-form ref="form">
-        <var-input v-model="formData.identifier" placeholder="用户名/邮箱/telegram id"
-          :rules="[(v) => !!v || '请输入用户名/邮箱/telegram id']" />
-        <var-input v-model="formData.password" placeholder="密码" type="password"
-          :rules="[v => !!v || '密码不能为空', (v) => v.length >= 6 || '密码不能低于6位']" />
+        <var-input
+          v-model="formData.identifier"
+          placeholder="用户名/邮箱/telegram id"
+          :rules="[(v) => !!v || '请输入用户名/邮箱/telegram id']"
+        />
+        <var-input
+          v-model="formData.password"
+          placeholder="密码"
+          type="password"
+          :rules="[(v) => !!v || '密码不能为空', (v) => v.length >= 6 || '密码不能低于6位']"
+        />
       </var-form>
       <var-chip type="warning" block v-if="showIncorrect">
         {{ errorText }}
@@ -14,12 +26,8 @@
 
       <template #title>
         <var-space justify="space-between">
-          <div>
-            登录
-          </div>
-          <var-link type="info" underline="hover" href="/register">
-            去注册
-          </var-link>
+          <div>登录</div>
+          <var-link type="info" underline="hover" href="/register"> 去注册 </var-link>
         </var-space>
       </template>
     </var-dialog>
@@ -27,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Form, type DialogActions, Snackbar } from '@varlet/ui';
+import { Form, type DialogActions, Snackbar } from '@varlet/ui'
 
 const show = defineModel('show', { type: Boolean })
 
@@ -49,7 +57,7 @@ const beforeClose = async (action: DialogActions, done: () => any) => {
       })
       const resp = await $acgapi<LoginSuccessResponse>('/login', {
         headers: {
-          Authorization: `Bearer ${useCookie('TOKEN').value}`,
+          Authorization: `Bearer ${useCookie('TOKEN').value}`
         },
         method: 'POST',
         body: {
@@ -76,7 +84,7 @@ const beforeClose = async (action: DialogActions, done: () => any) => {
         cookie.value = resp.token
         const profile = await $acgapi<ProfileResponse>('/user/profile', {
           headers: {
-            Authorization: `Bearer ${resp.token}`,
+            Authorization: `Bearer ${resp.token}`
           },
           onResponseError({ request, response, options }) {
             Snackbar.error({
@@ -87,11 +95,11 @@ const beforeClose = async (action: DialogActions, done: () => any) => {
             Snackbar.error({
               content: `请求失败: ${error.message}`
             })
-          },
+          }
         })
         if (profile.data) {
           Snackbar({
-            content: `欢迎回来, ${profile.data.username} ~`,
+            content: `欢迎回来, ${profile.data.username} ~`
           })
           usePiniaStore().setR18(profile.data.settings.r18)
         }
@@ -105,7 +113,6 @@ const beforeClose = async (action: DialogActions, done: () => any) => {
   }
   done()
 }
-
 </script>
 
 <style></style>

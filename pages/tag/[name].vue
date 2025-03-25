@@ -6,18 +6,31 @@
     <var-divider dashed />
     <var-skeleton :loading="result.list.length === 0" fullscreen></var-skeleton>
 
-    <VirtualWaterfall :virtual="waterfallOption.virtual" :gap="waterfallOption.gap"
-      :preload-screen-count="waterfallOption.preloadScreenCount" :item-min-width="waterfallOption.itemMinWidth"
-      :max-column-count="waterfallOption.maxColumnCount" :min-column-count="waterfallOption.minColumnCount"
-      :calc-item-height="calcItemHeight" :items="result.list">
+    <VirtualWaterfall
+      :virtual="waterfallOption.virtual"
+      :gap="waterfallOption.gap"
+      :preload-screen-count="waterfallOption.preloadScreenCount"
+      :item-min-width="waterfallOption.itemMinWidth"
+      :max-column-count="waterfallOption.maxColumnCount"
+      :min-column-count="waterfallOption.minColumnCount"
+      :calc-item-height="calcItemHeight"
+      :items="result.list"
+    >
       <template #default="scope">
         <WaterfallCard v-if="scope?.item" :item="scope.item" />
       </template>
     </VirtualWaterfall>
     <ClientOnly>
       <div class="index-footer" v-if="result.end && result.list.length > 0">
-        <div style="font-size: large;margin: 0 16px;text-align: center;color: hsla(var(--hsl-text), 0.8);"> ∑( 口 ||
-          你居然看完了!
+        <div
+          style="
+            font-size: large;
+            margin: 0 16px;
+            text-align: center;
+            color: hsla(var(--hsl-text), 0.8);
+          "
+        >
+          ∑( 口 || 你居然看完了!
         </div>
       </div>
     </ClientOnly>
@@ -25,11 +38,11 @@
 </template>
 
 <script lang="ts" setup>
-const route = useRoute();
+const route = useRoute()
 const tagName = route.params.name
 
 useHead({
-  title: `#${tagName}`,
+  title: `#${tagName}`
 })
 
 useSeoMeta({
@@ -42,18 +55,17 @@ useSeoMeta({
   twitterCard: 'summary'
 })
 
-const containerRef = ref<HTMLElement>();
+const containerRef = ref<HTMLElement>()
 onMounted(() => {
   if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + "px";
+    containerRef.value.style.height = window.innerHeight - 64 + 'px'
   }
-});
+})
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   tag: `${route.params.name}`,
-  mode: 'index',
-});
-
+  mode: 'index'
+})
 </script>
 
 <style scoped>
@@ -75,6 +87,5 @@ const { waterfallOption, result, calcItemHeight } = useWaterfall({
   .container {
     max-width: 100%;
   }
-
 }
 </style>

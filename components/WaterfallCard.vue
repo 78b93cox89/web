@@ -3,7 +3,12 @@
     <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
       <div class="cover">
         <Transition>
-          <NuxtImg :src="item.detail.pictures[0].thumbnail" :alt="item.detail.title" class="img" v-if="loaded" />
+          <NuxtImg
+            :src="item.detail.pictures[0].thumbnail"
+            :alt="item.detail.title"
+            class="img"
+            v-if="loaded"
+          />
         </Transition>
       </div>
       <div class="overlay">
@@ -19,51 +24,48 @@
 </template>
 
 <script setup lang="ts">
-import type { WaterfallItem } from '~/typing/waterfall';
+import type { WaterfallItem } from '~/typing/waterfall'
 const props = withDefaults(
   defineProps<{
-    item: WaterfallItem;
-    onlyImage?: boolean;
-    noImage?: boolean;
+    item: WaterfallItem
+    onlyImage?: boolean
+    noImage?: boolean
   }>(),
   {
     onlyImage: false,
-    noImage: false,
-  },
-);
+    noImage: false
+  }
+)
 
-const loaded = ref(false);
+const loaded = ref(false)
 
 onBeforeMount(() => {
   if (!props.noImage) {
     new Promise((resolve) => {
-      const image = new Image();
+      const image = new Image()
 
       image.onload = () => {
-        loaded.value = true;
-        resolve(true);
-      };
+        loaded.value = true
+        resolve(true)
+      }
 
       image.onerror = (error) => {
-        console.error(error);
-        loaded.value = true;
-        resolve(true);
-      };
+        console.error(error)
+        loaded.value = true
+        resolve(true)
+      }
 
-      image.src = props.item.detail.pictures[0].thumbnail;
-    });
+      image.src = props.item.detail.pictures[0].thumbnail
+    })
   }
-});
-
+})
 
 const handleCardClick = (item: WaterfallItem) => {
-  useArtworkStore().addArtwork(item.detail);
+  useArtworkStore().addArtwork(item.detail)
   navigateTo({
     path: `/artwork/${item.id}`
-  });
-};
-
-
+  })
+}
 </script>
 
 <style scoped>

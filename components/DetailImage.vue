@@ -1,8 +1,17 @@
 <template>
   <var-loading type="wave" :loading="loading">
     <var-result type="error" :description="loadErrorText" v-if="loadError" />
-    <var-image :src="regular" position="center" lazy @load="onLoaded(index)" @error="onError" :loading="thumbnail"
-      :alt="`第${index + 1}张图片`" @click="previewImage(index)" class="image" />
+    <var-image
+      :src="regular"
+      position="center"
+      lazy
+      @load="onLoaded(index)"
+      @error="onError"
+      :loading="thumbnail"
+      :alt="`第${index + 1}张图片`"
+      @click="previewImage(index)"
+      class="image"
+    />
   </var-loading>
 </template>
 
@@ -27,7 +36,6 @@ const onLoaded = (index: number) => {
 const loading = ref(true)
 const loadError = ref(false)
 const loadErrorText = ref('图片被吃掉了(´;ω;`)')
-
 
 const onThumbnailLoaded = () => {
   emit('load', props.index)

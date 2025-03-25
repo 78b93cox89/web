@@ -4,12 +4,10 @@
   </div>
 </template>
 
-
 <script setup>
 useHead({
-  title: "随便看看",
+  title: '随便看看'
 })
-
 </script>
 
 <style scoped>

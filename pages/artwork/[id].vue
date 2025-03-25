@@ -11,10 +11,19 @@
         <div class="artwork-container">
           <div class="artwork-pictures">
             <div class="pictures-container">
-              <div class="picture-card var-elevation--2" v-for="(picture, index) in artwork?.pictures" :key="picture.id"
-                :style="adjustPictureSize(picture)">
-                <detail-image :index="index" :regular="picture.regular" :thumbnail="picture.thumbnail"
-                  @preview="previewImage" @load="imageLoad" />
+              <div
+                class="picture-card var-elevation--2"
+                v-for="(picture, index) in artwork?.pictures"
+                :key="picture.id"
+                :style="adjustPictureSize(picture)"
+              >
+                <detail-image
+                  :index="index"
+                  :regular="picture.regular"
+                  :thumbnail="picture.thumbnail"
+                  @preview="previewImage"
+                  @load="imageLoad"
+                />
               </div>
             </div>
           </div>
@@ -22,8 +31,13 @@
           <div class="artwork-info">
             <div class="artwork-title">{{ artwork?.title }}</div>
 
-            <var-link underline="none" class="source-url-link" :href="artwork?.source_url" target="_blank"
-              rel="noopener noreferrer">
+            <var-link
+              underline="none"
+              class="source-url-link"
+              :href="artwork?.source_url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               → {{ artwork?.source_type }}
             </var-link>
 
@@ -42,26 +56,46 @@
                   </div>
                 </var-collapse-transition>
                 <var-divider hairline>
-                  <var-button size="small" @click="expandedTags = !expandedTags" title="展开/收起标签" style="margin: 0 8px;">
+                  <var-button
+                    size="small"
+                    @click="expandedTags = !expandedTags"
+                    title="展开/收起标签"
+                    style="margin: 0 8px"
+                  >
                     <var-icon :name="expandedTags ? 'chevron-up' : 'chevron-down'" />
                   </var-button>
                 </var-divider>
               </div>
             </div>
-            <div :line-clamp="5" :tooltip="false" expand-trigger="click" class="artwork-description">
-              <div style="white-space: pre-wrap;"> {{ artwork?.description }}</div>
+            <div
+              :line-clamp="5"
+              :tooltip="false"
+              expand-trigger="click"
+              class="artwork-description"
+            >
+              <div style="white-space: pre-wrap">{{ artwork?.description }}</div>
             </div>
 
             <div class="artwork-action">
               <var-button @click="routerBack" size="large" title="返回">
                 <var-icon name="chevron-left" />
               </var-button>
-              <var-button size="large" text-color="#39c5bb" @click="downloadPictures" :loading="!downloadAvailable"
-                title="下载">
+              <var-button
+                size="large"
+                text-color="#39c5bb"
+                @click="downloadPictures"
+                :loading="!downloadAvailable"
+                title="下载"
+              >
                 <var-icon name="download-outline" />
               </var-button>
               <var-menu placement="top-start">
-                <var-button size="large" title="相关推荐" text-color="#f92f60" @click="searchSimilar">
+                <var-button
+                  size="large"
+                  title="相关推荐"
+                  text-color="#f92f60"
+                  @click="searchSimilar"
+                >
                   <var-icon name="camera-outline" />
                 </var-button>
               </var-menu>
@@ -84,8 +118,8 @@ import type { Artwork, ArtworkDetailResponse, Picture } from '~/typing/artwork'
 
 definePageMeta({
   pageTransition: {
-    name: "kawaii-bounce",
-    mode: "out-in",
+    name: 'kawaii-bounce',
+    mode: 'out-in',
     appear: true
   }
 })
@@ -99,23 +133,20 @@ const adjustPictureSize = (picture: Picture) => {
   if (ratio > 1) {
     return {
       width: '100%',
-      height: 'auto',
+      height: 'auto'
     }
   } else {
     return {
       width: `${ratio * 100}%`,
-      height: 'auto',
+      height: 'auto'
     }
   }
-
 }
 
 const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId))
 
 const downloadAvailable = ref(false)
-const pictureRegularUrls = computed(() =>
-  artwork.value?.pictures.map((picture) => picture.regular)
-)
+const pictureRegularUrls = computed(() => artwork.value?.pictures.map((picture) => picture.regular))
 
 if (artwork.value === null) {
   try {
@@ -127,20 +158,21 @@ if (artwork.value === null) {
   } catch {
     throw createError({
       status: 500,
-      statusMessage: "获取作品失败"
+      statusMessage: '获取作品失败'
     })
   }
-
 } else {
   downloadAvailable.value = true
 }
 
 useHead({
-  title: `${artwork.value.title}`,
+  title: `${artwork.value.title}`
 })
-const ogImageUrl = artwork.value.r18 ? "/og-image/nsfw.webp" : (artwork.value.pictures[0].regular.endsWith('.avif')
+const ogImageUrl = artwork.value.r18
+  ? '/og-image/nsfw.webp'
+  : artwork.value.pictures[0].regular.endsWith('.avif')
   ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].regular}&output=jpg`
-  : artwork.value.pictures[0].regular)
+  : artwork.value.pictures[0].regular
 
 useSeoMeta({
   description: `${artwork.value.description}`,
@@ -151,7 +183,7 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
   twitterTitle: `${artwork.value.title} | ManyACG`,
   twitterDescription: `${artwork.value.description}`,
-  twitterImage: ogImageUrl,
+  twitterImage: ogImageUrl
 })
 
 const loading = ref(true)
@@ -199,7 +231,7 @@ const downloadPictures = async () => {
           Snackbar({
             content: `请求失败: ${error.message}`,
             position: 'bottom',
-            type: 'error',
+            type: 'error'
           })
         },
         onResponseError({ response }) {
@@ -207,16 +239,16 @@ const downloadPictures = async () => {
             Snackbar({
               content: '这张图片需要登录后才能下载哦',
               position: 'bottom',
-              type: 'error',
+              type: 'error'
             })
           } else {
             Snackbar({
               content: `响应失败: ${response.statusText || response.status}`,
               position: 'bottom',
-              type: 'error',
+              type: 'error'
             })
           }
-        },
+        }
       })
       if (resp) {
         saveAs(resp, artwork.value.pictures[0].file_name)
@@ -229,7 +261,7 @@ const downloadPictures = async () => {
   }
 
   const zip = new ZipWriter(new BlobWriter('application/zip'), {
-    zip64: true,
+    zip64: true
   })
   const failedDownloads: string[] = []
 
@@ -246,7 +278,7 @@ const downloadPictures = async () => {
             } else {
               throw new Error(`响应失败: ${response.statusText || response.status}`)
             }
-          },
+          }
         })
 
         if (resp) {
@@ -271,7 +303,7 @@ const downloadPictures = async () => {
       Snackbar({
         content: `有 ${failedDownloads.length} 张图片下载失败`,
         position: 'bottom',
-        type: 'warning',
+        type: 'warning'
       })
     }
     const zipFile = await zip.close()
@@ -279,13 +311,13 @@ const downloadPictures = async () => {
     Snackbar({
       content: '下载完成',
       position: 'bottom',
-      type: 'success',
+      type: 'success'
     })
   } catch (e: any) {
     Snackbar({
       content: `下载过程发生错误: ${e.message}`,
       position: 'bottom',
-      type: 'error',
+      type: 'error'
     })
   } finally {
     downloadAvailable.value = true
@@ -301,7 +333,7 @@ const previewImage = (index: number) => {
     images: pictureRegularUrls.value,
     initialIndex: index,
     closeable: true,
-    closeOnKeyEscape: true,
+    closeOnKeyEscape: true
   })
 }
 
@@ -310,7 +342,6 @@ const expandedTags = ref(false)
 const searchSimilar = () => {
   navigateTo(`/search/result?similar_target=${artworkId}`)
 }
-
 </script>
 
 <style scoped>
@@ -330,7 +361,6 @@ const searchSimilar = () => {
   display: flex;
   gap: 20px;
 }
-
 
 .artwork-pictures {
   flex: 1;

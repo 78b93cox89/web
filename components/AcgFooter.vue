@@ -6,22 +6,53 @@
       </var-tooltip>
     </var-divider>
     <div class="divider-vertical-container">
-      <var-link :text-color="linkColors.github" underline="none" href="https://github.com/krau/ManyACG"
-        target="_blank">开源地址</var-link>
+      <var-link
+        :text-color="linkColors.github"
+        underline="none"
+        href="https://github.com/krau/ManyACG"
+        target="_blank"
+        >开源地址</var-link
+      >
       <var-divider vertical />
-      <var-link underline="none" href="https://t.me/moreacg" target="_blank"
-        :text-color="linkColors.telegram">频道</var-link>
+      <var-link
+        underline="none"
+        href="https://t.me/moreacg"
+        target="_blank"
+        :text-color="linkColors.telegram"
+        >频道</var-link
+      >
       <var-divider vertical />
-      <var-link underline="none" href="https://krau.top" target="_blank" :text-color="linkColors.blog">博客</var-link>
+      <var-link
+        underline="none"
+        href="https://krau.top"
+        target="_blank"
+        :text-color="linkColors.blog"
+        >博客</var-link
+      >
       <var-divider vertical />
-      <var-link underline="none" href="https://www.someacg.top" target="_blank"
-        :text-color="linkColors.someacg">SomeACG</var-link>
+      <var-link
+        underline="none"
+        href="https://www.someacg.top"
+        target="_blank"
+        :text-color="linkColors.someacg"
+        >SomeACG</var-link
+      >
       <var-divider vertical />
-      <var-link underline="none" href="https://www.moely.link/" target="_blank"
-        :text-color="linkColors.moely">萌哩</var-link>
+      <var-link
+        underline="none"
+        href="https://www.moely.link/"
+        target="_blank"
+        :text-color="linkColors.moely"
+        >萌哩</var-link
+      >
       <var-divider vertical />
-      <var-link underline="none" href="https://pic.cosine.ren/" target="_blank" :text-color="linkColors.cosine">Cosine
-        🎨 Gallery</var-link>
+      <var-link
+        underline="none"
+        href="https://pic.cosine.ren/"
+        target="_blank"
+        :text-color="linkColors.cosine"
+        >Cosine 🎨 Gallery</var-link
+      >
     </div>
   </footer>
 </template>

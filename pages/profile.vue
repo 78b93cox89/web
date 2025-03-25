@@ -2,8 +2,13 @@
   <div>
     <div class="profile">
       <var-paper :elevation="2" class="card-container">
-
-        <var-cell ripple border-offset="0" :border="true" class="paper-cell" :title="userProfile?.data.username">
+        <var-cell
+          ripple
+          border-offset="0"
+          :border="true"
+          class="paper-cell"
+          :title="userProfile?.data.username"
+        >
           <template #icon>
             <var-icon name="account-circle" size="36" style="margin-right: 24px" />
           </template>
@@ -27,7 +32,14 @@
           </template>
         </var-cell>
 
-        <var-cell ripple border-offset="0" :border="true" class="paper-cell" title="涩涩" @click="toggleR18">
+        <var-cell
+          ripple
+          border-offset="0"
+          :border="true"
+          class="paper-cell"
+          title="涩涩"
+          @click="toggleR18"
+        >
           <template #icon>
             <Icon name="i-ic:round-18-up-rating" size="36" style="margin-right: 24px" />
           </template>
@@ -36,12 +48,18 @@
           </template>
         </var-cell>
 
-        <var-cell ripple border-offset="0" :border="true" class="paper-cell" title="登出账号" @click="logout">
+        <var-cell
+          ripple
+          border-offset="0"
+          :border="true"
+          class="paper-cell"
+          title="登出账号"
+          @click="logout"
+        >
           <template #icon>
             <var-icon name="power" size="36" style="margin-right: 24px" />
           </template>
         </var-cell>
-
       </var-paper>
     </div>
   </div>
@@ -49,7 +67,7 @@
 
 <script lang="ts" setup>
 useHead({
-  title: '账号设定',
+  title: '账号设定'
 })
 const piniaStore = usePiniaStore()
 
@@ -57,11 +75,10 @@ const userProfile = ref<ProfileResponse>()
 const enabledR18 = ref(userProfile.value?.data.settings.r18)
 const cookie = useCookie('TOKEN')
 
-
 onMounted(async () => {
   const resp = await $acgapi<ProfileResponse>('/user/profile', {
     headers: {
-      Authorization: `Bearer ${useCookie('TOKEN').value}`,
+      Authorization: `Bearer ${useCookie('TOKEN').value}`
     },
     onResponseError({ request, response, options }) {
       Snackbar.error({
@@ -72,7 +89,7 @@ onMounted(async () => {
       Snackbar.error({
         content: `请求失败: ${error.message}`
       })
-    },
+    }
   })
   if (resp) {
     userProfile.value = resp
@@ -86,13 +103,13 @@ const toggleR18 = async () => {
   switchingR18.value = true
   const resp = await $acgapi<UpdateSettingsResponse>('/user/settings', {
     headers: {
-      Authorization: `Bearer ${useCookie('TOKEN').value}`,
+      Authorization: `Bearer ${useCookie('TOKEN').value}`
     },
     method: 'PUT',
     body: {
       r18: !userProfile.value!.data.settings.r18,
-      theme: userProfile.value!.data.settings.theme || "",
-      language: userProfile.value!.data.settings.language || ""
+      theme: userProfile.value!.data.settings.theme || '',
+      language: userProfile.value!.data.settings.language || ''
     },
     onResponseError({ response, options, error }) {
       Snackbar.error({
@@ -103,7 +120,7 @@ const toggleR18 = async () => {
       Snackbar.error({
         content: `请求失败: ${error.message}`
       })
-    },
+    }
   }).finally(() => {
     switchingR18.value = false
   })
@@ -123,9 +140,9 @@ const logout = async () => {
 
   await $acgapi('/logout', {
     headers: {
-      Authorization: `Bearer ${useCookie('TOKEN').value}`,
+      Authorization: `Bearer ${useCookie('TOKEN').value}`
     },
-    method: 'POST',
+    method: 'POST'
   })
 
   useNuxtApp().runWithContext(() => {
@@ -136,8 +153,6 @@ const logout = async () => {
     window.location.href = '/'
   }
 }
-
-
 </script>
 
 <style scoped>
@@ -151,7 +166,6 @@ const logout = async () => {
     margin: 0 16px;
   }
 }
-
 
 .card-container {
   margin-top: 16px;

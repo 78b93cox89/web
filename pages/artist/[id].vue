@@ -4,9 +4,7 @@
       <div class="artist-info">
         <var-space direction="row" justify="space-between">
           <var-space direction="column">
-            <div class="artist-name">
-              {{ artistData?.data.name }} 的作品
-            </div>
+            <div class="artist-name">{{ artistData?.data.name }} 的作品</div>
             <div class="artist-username">
               {{ artistData?.data.username }}
             </div>
@@ -18,17 +16,23 @@
       </div>
       <var-divider dashed margin="16px" />
       <var-skeleton :loading="result.list.length === 0" fullscreen></var-skeleton>
-      <VirtualWaterfall :virtual="waterfallOption.virtual" :gap="waterfallOption.gap"
-        :preload-screen-count="waterfallOption.preloadScreenCount" :item-min-width="waterfallOption.itemMinWidth"
-        :max-column-count="waterfallOption.maxColumnCount" :min-column-count="waterfallOption.minColumnCount"
-        :calc-item-height="calcItemHeight" :items="result.list">
+      <VirtualWaterfall
+        :virtual="waterfallOption.virtual"
+        :gap="waterfallOption.gap"
+        :preload-screen-count="waterfallOption.preloadScreenCount"
+        :item-min-width="waterfallOption.itemMinWidth"
+        :max-column-count="waterfallOption.maxColumnCount"
+        :min-column-count="waterfallOption.minColumnCount"
+        :calc-item-height="calcItemHeight"
+        :items="result.list"
+      >
         <template #default="scope">
           <WaterfallCard v-if="scope?.item" :item="scope.item" />
         </template>
       </VirtualWaterfall>
       <ClientOnly>
         <div class="index-footer" v-if="result.end && result.list.length > 0">
-          <div style="font-size: large; margin: 0 16px; text-align: center;">
+          <div style="font-size: large; margin: 0 16px; text-align: center">
             " ∑( 口 || 你居然看完了!"
           </div>
         </div>
@@ -38,32 +42,34 @@
 </template>
 
 <script lang="ts" setup>
-import type { ArtistResponse } from '~/typing/artwork';
+import type { ArtistResponse } from '~/typing/artwork'
 
-const route = useRoute();
-const containerRef = ref<HTMLElement | null>(null);
+const route = useRoute()
+const containerRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + "px";
+    containerRef.value.style.height = window.innerHeight - 64 + 'px'
   }
-});
+})
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   artistId: `${route.params.id}`,
-  mode: 'index',
-});
+  mode: 'index'
+})
 
-const { data: artistData, error } = await useAcgapiData<ArtistResponse>(`/artist/${route.params.id}`);
+const { data: artistData, error } = await useAcgapiData<ArtistResponse>(
+  `/artist/${route.params.id}`
+)
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode,
-    message: error.value.message,
-  });
+    message: error.value.message
+  })
 }
 
 useHead({
-  title: `${artistData.value?.data.name} 的作品`,
-});
+  title: `${artistData.value?.data.name} 的作品`
+})
 
 useSeoMeta({
   description: `${artistData.value?.data.name} 的作品 | ManyACG`,
@@ -71,8 +77,8 @@ useSeoMeta({
   ogDescription: `${artistData.value?.data.name} 的作品 | ManyACG`,
   twitterDescription: `${artistData.value?.data.name} 的作品 | ManyACG`,
   twitterTitle: `${artistData.value?.data.name} 的作品 | ManyACG`,
-  twitterCard: 'summary',
-});
+  twitterCard: 'summary'
+})
 </script>
 
 <style scoped>

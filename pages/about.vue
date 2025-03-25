@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="about">
-      <h2>
-        关于 ManyACG
-      </h2>
+      <h2>关于 ManyACG</h2>
       <h3>这是什么?</h3>
       <p>
         ManyACG 是1个个人向二次元图片分享网站, 所有图片都来自站长关注的画师&收藏, 不是随便爬取的哦 !
@@ -16,47 +14,65 @@
         <br />
         <code>Miku,初音未来;双马尾,JK</code>
         <br />
-        会搜索包含 <code>Miku</code> <b>或</b> <code>初音未来</code>, <b>且</b>包含 <code>双马尾</code> <b>或</b> <code>JK</code> 的图片
+        会搜索包含 <code>Miku</code> <b>或</b> <code>初音未来</code>, <b>且</b>包含
+        <code>双马尾</code> <b>或</b> <code>JK</code> 的图片
       </p>
-      <p>
-        AI 搜索是根据图片标题, 描述, 标签等信息进行的混合搜索, 开启后, 逻辑参数会被忽略
-      </p>
+      <p>AI 搜索是根据图片标题, 描述, 标签等信息进行的混合搜索, 开启后, 逻辑参数会被忽略</p>
       <h3>随机图片API</h3>
       <p>
         直接跳转到图片: <br />
-        <var-link href="https://manyacg.top/setu" class="link" target="_blank">manyacg.top/setu</var-link> (默认无R18)
+        <var-link href="https://manyacg.top/setu" class="link" target="_blank"
+          >manyacg.top/setu</var-link
+        >
+        (默认无R18)
         <br />
-        <var-link href="https://manyacg.top/sese" class="link" target="_blank">manyacg.top/sese</var-link> (含R18, 谨慎访问)
+        <var-link href="https://manyacg.top/sese" class="link" target="_blank"
+          >manyacg.top/sese</var-link
+        >
+        (含R18, 谨慎访问)
         <br />
         以json格式返回:
         <br />
-        <var-link href="https://manyacg.top/api/v1/artwork/random" class="link"
-          target="_blank">manyacg.top/api/v1/artwork/random</var-link>
+        <var-link href="https://manyacg.top/api/v1/artwork/random" class="link" target="_blank"
+          >manyacg.top/api/v1/artwork/random</var-link
+        >
       </p>
       <h3>关注我们</h3>
       <ul>
         <li>
-          Telegram 频道 <var-link href="https://t.me/moreacg" class="link" target="_blank">@MoreACG</var-link>
+          Telegram 频道
+          <var-link href="https://t.me/moreacg" class="link" target="_blank">@MoreACG</var-link>
         </li>
         <li>
-          后端开源地址 <var-link href="https://github.com/krau/ManyACG" class="link" target="_blank">GitHub:
-            krau/ManyACG</var-link>
+          后端开源地址
+          <var-link href="https://github.com/krau/ManyACG" class="link" target="_blank"
+            >GitHub: krau/ManyACG</var-link
+          >
         </li>
         <li>
-          前端开源地址 <var-link href="https://github.com/ManyACG/web" class="link" target="_blank">GitHub:
-            ManyACG/web</var-link>
+          前端开源地址
+          <var-link href="https://github.com/ManyACG/web" class="link" target="_blank"
+            >GitHub: ManyACG/web</var-link
+          >
         </li>
         <li>
-          <var-link href="https://manyacg.top/atom.xml" class="link" target="_blank">RSS 订阅</var-link>
+          <var-link href="https://manyacg.top/atom.xml" class="link" target="_blank"
+            >RSS 订阅</var-link
+          >
         </li>
         <li>
-          <var-link href="https://app.follow.is/share/feeds/71961005897733120" class="link" target="_blank">Follow
-            订阅</var-link>
+          <var-link
+            href="https://app.follow.is/share/feeds/71961005897733120"
+            class="link"
+            target="_blank"
+            >Follow 订阅</var-link
+          >
         </li>
       </ul>
       <h3>友联申请</h3>
       <p>
-        我们接受相似类型的网站友联申请, 请邮件联系: <var-link href="mailto:link@manyacg.top" class="link">link@manyacg.top</var-link>
+        我们接受相似类型的网站友联申请, 请邮件联系:
+        <var-link href="mailto:link@manyacg.top" class="link">link@manyacg.top</var-link>
       </p>
       <br />
     </div>
@@ -65,7 +81,7 @@
 
 <script lang="ts" setup>
 useHead({
-  title: '关于',
+  title: '关于'
 })
 </script>
 
@@ -84,7 +100,7 @@ useHead({
 }
 
 .link:after {
-  content: "";
+  content: '';
   position: absolute;
   z-index: -1;
   top: 77%;

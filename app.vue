@@ -12,17 +12,17 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: '我会带上我的萝莉私奔',
+      content: '我会带上我的萝莉私奔'
     },
     {
       name: 'application-name',
-      content: 'ManyACG',
-    },
+      content: 'ManyACG'
+    }
   ],
   link: [
     {
       rel: 'icon',
-      href: '/favicon.ico',
+      href: '/favicon.ico'
     }
   ],
   htmlAttrs: {
@@ -41,17 +41,18 @@ useSeoMeta({
   twitterSite: '@ManyACG',
   twitterTitle: 'ManyACG',
   twitterDescription: '我会带上我的萝莉私奔',
-  twitterImage: '/logo.webp',
+  twitterImage: '/logo.webp'
 })
 
-const cookie = useCookie('TOKEN',)
+const cookie = useCookie('TOKEN')
 if (cookie.value && cookie.value !== 'undefined') {
-  const { data } = await useAcgapiData<ProfileResponse>("/user/profile", {
+  const { data } = await useAcgapiData<ProfileResponse>('/user/profile', {
     headers: {
       Authorization: `Bearer ${cookie.value}`
     }
   })
-  if (data.value && data.value.data && data.value.data.settings) { // ? wtf
+  if (data.value && data.value.data && data.value.data.settings) {
+    // ? wtf
     usePiniaStore().setR18(data.value.data.settings.r18)
   }
 }
@@ -77,7 +78,7 @@ if (cookie.value && cookie.value !== 'undefined') {
 }
 
 body {
-  background-image: url("https://manyacg.top/setu");
+  background-image: url('https://manyacg.top/setu');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -99,15 +100,13 @@ body {
 
 .kawaii-bounce-enter-from {
   opacity: 0;
-  transform:
-    translateY(30px) rotateX(30deg) scale(0.92);
+  transform: translateY(30px) rotateX(30deg) scale(0.92);
   filter: blur(2px);
 }
 
 .kawaii-bounce-enter-to {
   opacity: 1;
-  transform:
-    translateY(0) rotateX(0) scale(1);
+  transform: translateY(0) rotateX(0) scale(1);
   filter: blur(0);
 }
 
@@ -117,17 +116,14 @@ body {
 
 .kawaii-bounce-leave-from {
   opacity: 1;
-  transform:
-    translateY(0) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .kawaii-bounce-leave-to {
   opacity: 0;
-  transform:
-    translateY(-30px) scale(0.95);
+  transform: translateY(-30px) scale(0.95);
   filter: blur(1.5px);
 }
-
 
 .fade-enter-active,
 .fade-leave-active {

@@ -17,7 +17,6 @@ const elevation = ref(1)
 const handleHover = (isHovering: boolean) => {
   elevation.value = isHovering ? 4 : 1
 }
-
 </script>
 
 <style scoped>

@@ -1,5 +1,4 @@
-import VueVirtualWaterfall from "@lhlyu/vue-virtual-waterfall";
+import VueVirtualWaterfall from '@lhlyu/vue-virtual-waterfall'
 export default defineNuxtPlugin((nuxtApp) => {
-    nuxtApp.vueApp.use(VueVirtualWaterfall);
-  });
-  
+  nuxtApp.vueApp.use(VueVirtualWaterfall)
+})

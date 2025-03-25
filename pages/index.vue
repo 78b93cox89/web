@@ -6,11 +6,10 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 useHead({
-  title: "ManyACG - 二次元美图精选收集",
-  titleTemplate: "%s"
+  title: 'ManyACG - 二次元美图精选收集',
+  titleTemplate: '%s'
 })
 </script>
 
@@ -25,7 +24,7 @@ useHead({
   font-weight: bold;
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .index-contanier {
     max-width: 100%;
   }

@@ -2,8 +2,8 @@
   <div>
     <NuxtLink :to="to" :href="href" class="nuxt-link" :target="target">
       <var-link underline="none" class="popup-menu-item">
-        <Icon :name="iconName" size="24" style="margin: 16px;" />
-        <div style="font-size: large;">{{ text }}</div>
+        <Icon :name="iconName" size="24" style="margin: 16px" />
+        <div style="font-size: large">{{ text }}</div>
       </var-link>
     </NuxtLink>
   </div>
@@ -17,7 +17,6 @@ defineProps<{
   href?: string
   target?: string
 }>()
-
 </script>
 
 <style scoped>
