@@ -1,5 +1,10 @@
 <template>
-  <var-paper ripple class="card" @click="handleCardClick(item)">
+  <var-paper
+    ripple
+    class="card"
+    @click.left="handleCardClick(item)"
+    @click.right.prevent="handleRightClick(item)"
+  >
     <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
       <div class="cover">
         <Transition>
@@ -64,6 +69,14 @@ const handleCardClick = (item: WaterfallItem) => {
   useArtworkStore().addArtwork(item.detail)
   navigateTo({
     path: `/artwork/${item.id}`
+  })
+}
+
+const handleRightClick = (item: WaterfallItem) => {
+  ImagePreview({
+    images: item.detail.pictures.map((pic) => pic.regular),
+    closeable: true,
+    closeOnKeyEscape: true
   })
 }
 </script>
