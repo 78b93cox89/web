@@ -16,22 +16,22 @@
     "@iconify-json/mdi": "^1.2.3",
     "@lhlyu/vue-virtual-waterfall": "^1.0.6",
     "@nuxt/icon": "^1.11.0",
-    "@nuxt/kit": "^3.16.0",
+    "@nuxt/kit": "^3.16.1",
     "@nuxtjs/fontaine": "^0.5.0",
     "@nuxtjs/seo": "3.0.1",
     "@pinia/nuxt": "^0.10.1",
     "@types/file-saver": "^2.0.7",
     "@types/tiny-async-pool": "^2.0.3",
     "@varlet/nuxt": "^0.1.5",
-    "@varlet/touch-emulator": "^3.9.1",
-    "@varlet/ui": "^3.9.1",
+    "@varlet/touch-emulator": "^3.10.2",
+    "@varlet/ui": "^3.10.2",
     "@vueuse/core": "^13.0.0",
     "@vueuse/nuxt": "^13.0.0",
-    "@zip.js/zip.js": "^2.7.57",
+    "@zip.js/zip.js": "^2.7.60",
     "default-passive-events": "^2.0.0",
     "file-saver": "^2.0.5",
-    "nuxt": "^3.16.0",
-    "nuxt-api-party": "^2.1.2",
+    "nuxt": "^3.16.1",
+    "nuxt-api-party": "^2.2.2",
     "nuxt-umami": "^3.2.0",
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
@@ -41,8 +41,8 @@
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@nuxt/image": "^1.9.0",
+    "@nuxt/image": "^1.10.0",
     "@nuxtjs/robots": "^5.2.8",
-    "nuxt-link-checker": "^4.2.0"
+    "nuxt-link-checker": "^4.3.0"
   }
 }
