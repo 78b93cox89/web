@@ -65,6 +65,13 @@
               @click="showPopup = false"
               text="关于"
             />
+            <popup-menu-item
+              :icon-name="r18StatusIcon"
+              to=""
+              @click="toggleR18"
+              text="R18"
+              v-if="isNotCN"
+            />
           </var-space>
 
           <div style="position: absolute; bottom: 0; width: 100%; margin-bottom: 20px">
@@ -137,6 +144,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { MyIPResponse } from '~/typing/artwork'
+
 const showPopup = ref(false)
 // const cookie = useCookie('TOKEN')
 const showLoginDialog = ref(false)
@@ -164,6 +173,26 @@ const handleChangeTheme = () => {
 const themeIcon = computed(() => {
   const piniaStore = usePiniaStore()
   return !piniaStore.preferLight ? 'i-line-md:sunny-filled' : 'i-line-md:moon-filled'
+})
+
+const toggleR18 = () => {
+  const piniaStore = usePiniaStore()
+  piniaStore.setR18(!piniaStore.r18)
+  showPopup.value = false
+  if (import.meta.client) {
+    window.location.reload()
+  }
+}
+
+const ipResp = await $acgapi<MyIPResponse>('/myip')
+const isNotCN = ref<boolean>((ipResp && ipResp.country !== 'CN') || false)
+if (!isNotCN.value) {
+  const piniaStore = usePiniaStore()
+  piniaStore.setR18(false)
+}
+const r18StatusIcon = computed(() => {
+  const piniaStore = usePiniaStore()
+  return piniaStore.r18 ? 'i-mdi:check-circle' : 'i-mdi:close-circle'
 })
 </script>
 

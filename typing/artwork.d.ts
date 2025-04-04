@@ -63,3 +63,9 @@ export interface ArtworkListRequest {
 }
 
 export interface LikeStatusResponse extends BaseResponse<boolean> {}
+
+export interface MyIPResponse {
+  country: string
+  countryName: string
+  ip: string
+}

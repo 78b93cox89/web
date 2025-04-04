@@ -44,18 +44,18 @@ useSeoMeta({
   twitterImage: '/logo.webp'
 })
 
-const cookie = useCookie('TOKEN')
-if (cookie.value && cookie.value !== 'undefined') {
-  const { data } = await useAcgapiData<ProfileResponse>('/user/profile', {
-    headers: {
-      Authorization: `Bearer ${cookie.value}`
-    }
-  })
-  if (data.value && data.value.data && data.value.data.settings) {
-    // ? wtf
-    usePiniaStore().setR18(data.value.data.settings.r18)
-  }
-}
+// const cookie = useCookie('TOKEN')
+// if (cookie.value && cookie.value !== 'undefined') {
+//   const { data } = await useAcgapiData<ProfileResponse>('/user/profile', {
+//     headers: {
+//       Authorization: `Bearer ${cookie.value}`
+//     }
+//   })
+//   if (data.value && data.value.data && data.value.data.settings) {
+//     // ? wtf
+//     usePiniaStore().setR18(data.value.data.settings.r18)
+//   }
+// }
 </script>
 
 <style>
