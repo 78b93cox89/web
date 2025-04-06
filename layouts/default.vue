@@ -184,12 +184,17 @@ const toggleR18 = () => {
   }
 }
 
-const ipResp = await $acgapi<MyIPResponse>('/myip')
-const isNotCN = ref<boolean>((ipResp && ipResp.country !== 'CN') || false)
-if (!isNotCN.value) {
-  const piniaStore = usePiniaStore()
-  piniaStore.setR18(false)
-}
+const isNotCN = ref<boolean>(false)
+
+onMounted(async () => {
+  const ipResp = await $acgapi<MyIPResponse>('/myip')
+  isNotCN.value = (ipResp && ipResp.country !== 'CN') || false
+  if (!isNotCN.value) {
+    const piniaStore = usePiniaStore()
+    piniaStore.setR18(false)
+  }
+})
+
 const r18StatusIcon = computed(() => {
   const piniaStore = usePiniaStore()
   return piniaStore.r18 ? 'i-mdi:check-circle' : 'i-mdi:close-circle'
