@@ -1,31 +1,42 @@
 <template>
-  <var-paper
-    ripple
-    class="card"
-    @click.left="handleCardClick(item)"
-    @click.right.prevent="handleRightClick(item)"
-  >
-    <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
-      <div class="cover">
-        <Transition>
-          <NuxtImg
-            :src="item.detail.pictures[0].thumbnail"
-            :alt="item.detail.title"
-            class="img"
-            v-if="loaded"
-          />
-        </Transition>
-      </div>
-      <div class="overlay">
-        <div class="card-body">
-          <h3>{{ item.detail.title }}</h3>
-          <div class="author">
-            {{ item.detail.artist.name }}
+  <div>
+    <var-paper
+      ripple
+      class="card"
+      @click.left="handleCardClick(item)"
+      @click.right.prevent="handleRightClick(item)"
+    >
+      <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
+        <div class="cover">
+          <Transition>
+            <NuxtImg
+              :src="item.detail.pictures[0].thumbnail"
+              :alt="item.detail.title"
+              class="img"
+              v-if="loaded"
+            />
+          </Transition>
+        </div>
+        <div class="overlay">
+          <div class="card-body">
+            <h3>{{ item.detail.title }}</h3>
+            <div class="author">
+              {{ item.detail.artist.name }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </var-paper>
+    </var-paper>
+    <ElImageViewer
+      v-if="showViewer"
+      :url-list="item.detail.pictures.map((pic) => pic.regular)"
+      @close="showViewer = false"
+      close-on-press-escape
+      hide-on-click-modal
+      show-progress
+      teleported
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -72,12 +83,15 @@ const handleCardClick = (item: WaterfallItem) => {
   })
 }
 
+const showViewer = ref(false)
+
 const handleRightClick = (item: WaterfallItem) => {
-  ImagePreview({
-    images: item.detail.pictures.map((pic) => pic.regular),
-    closeable: true,
-    closeOnKeyEscape: true
-  })
+  showViewer.value = true
+  // ImagePreview({
+  //   images: item.detail.pictures.map((pic) => pic.regular),
+  //   closeable: true,
+  //   closeOnKeyEscape: true
+  // })
 }
 </script>
 

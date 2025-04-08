@@ -11,6 +11,8 @@
     "start": "node .output/server/index.mjs"
   },
   "dependencies": {
+    "@element-plus/icons-vue": ">=0.2.6",
+    "@element-plus/nuxt": "1.1.1",
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/line-md": "^1.2.5",
     "@iconify-json/mdi": "^1.2.3",
@@ -29,6 +31,7 @@
     "@vueuse/nuxt": "^13.0.0",
     "@zip.js/zip.js": "^2.7.60",
     "default-passive-events": "^2.0.0",
+    "element-plus": ">=2",
     "file-saver": "^2.0.5",
     "nuxt": "^3.16.1",
     "nuxt-api-party": "^2.2.2",

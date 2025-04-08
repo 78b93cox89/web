@@ -33,7 +33,8 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/icon',
     '@nuxtjs/fontaine',
-    'pinia-plugin-persistedstate/nuxt'
+    'pinia-plugin-persistedstate/nuxt',
+    '@element-plus/nuxt'
   ],
 
   piniaPluginPersistedstate: {
