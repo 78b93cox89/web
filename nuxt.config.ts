@@ -23,9 +23,6 @@ export default defineNuxtConfig({
       proxy: `${process.env.API_BASE}/atom`
     }
   },
-  app: {
-    pageTransition: { name: 'fade', mode: 'out-in' }
-  },
   modules: [
     '@varlet/nuxt',
     '@pinia/nuxt',

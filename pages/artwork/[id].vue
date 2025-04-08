@@ -116,14 +116,6 @@ import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
 import type { Artwork, ArtworkDetailResponse, Picture } from '~/typing/artwork'
 
-definePageMeta({
-  pageTransition: {
-    name: 'kawaii-bounce',
-    mode: 'out-in',
-    appear: true
-  }
-})
-
 const route = useRoute()
 const artworkStore = useArtworkStore()
 const artworkId = route.params.id as string
