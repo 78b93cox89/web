@@ -11,7 +11,7 @@
     "start": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@element-plus/icons-vue": ">=0.2.6",
+    "@element-plus/icons-vue": "^2.3.1",
     "@element-plus/nuxt": "1.1.1",
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/line-md": "^1.2.7",
