@@ -102,6 +102,34 @@
             </div>
           </div>
         </div>
+        <div class="artwork-similar">
+          <var-divider>
+            <div
+              style="
+                font-size: large;
+                margin: 0 16px;
+                text-align: center;
+                color: hsla(var(--hsl-text), 0.8);
+              "
+            >
+              相关推荐
+            </div>
+          </var-divider>
+          <VirtualWaterfall
+            :virtual="waterfallOption.virtual"
+            :gap="waterfallOption.gap"
+            :preload-screen-count="waterfallOption.preloadScreenCount"
+            :item-min-width="waterfallOption.itemMinWidth"
+            :max-column-count="waterfallOption.maxColumnCount"
+            :min-column-count="waterfallOption.minColumnCount"
+            :calc-item-height="calcItemHeight"
+            :items="result.list"
+          >
+            <template #default="scope">
+              <WaterfallCard v-if="scope?.item" :item="scope.item" />
+            </template>
+          </VirtualWaterfall>
+        </div>
       </div>
     </Transition>
   </div>
@@ -134,6 +162,10 @@ const adjustPictureSize = (picture: Picture) => {
     }
   }
 }
+
+const { waterfallOption, result, calcItemHeight } = useWaterfall({
+  similarTarget: artworkId
+})
 
 const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId))
 
