@@ -29,7 +29,11 @@ const keyword = ref('')
 const hybird = ref(false)
 
 const handleSearch = () => {
-  navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`)
+  if (!keyword.value) {
+    navigateTo('/search')
+  } else {
+    navigateTo(`/search/result?q=${keyword.value}&hybrid=${hybird.value}`)
+  }
   show.value = false
 }
 </script>
