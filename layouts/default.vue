@@ -139,12 +139,16 @@
 
     <slot />
 
-    <FabButton />
+    <FabButton v-if="showFabButton" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { MyIPResponse } from '~/typing/artwork'
+
+const showFabButton = computed(() => {
+  return !useSmallWindow().value
+})
 
 const showPopup = ref(false)
 // const cookie = useCookie('TOKEN')
