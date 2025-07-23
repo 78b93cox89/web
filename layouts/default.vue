@@ -45,31 +45,15 @@
         </var-space>
 
         <var-divider />
-
         <var-space direction="column" size="large">
-          <!-- <popup-menu-item icon-name="i-mdi:account-circle" text="登录" @click="showLoginDialog = true"
-              v-if="!loggedIn" />
-            <popup-menu-item icon-name="i-mdi:account-circle" text="账号设定" @click="showPopup = false" to="/profile"
-              v-if="loggedIn" /> -->
-          <popup-menu-item
-            icon-name="i-mdi:fire"
-            to="/random"
-            @click="showPopup = false"
-            text="随便看看"
-          />
-          <popup-menu-item
-            icon-name="i-mdi:information-outline"
-            to="/about"
-            @click="showPopup = false"
-            text="关于"
-          />
-          <popup-menu-item
-            :icon-name="r18StatusIcon"
-            to=""
-            @click="toggleR18"
-            text="R18"
-            v-if="isNotCN"
-          />
+          <template v-for="item in menuItems" :key="item.text">
+            <popup-menu-item
+              :icon-name="item.iconName"
+              :text="item.text"
+              :to="item.to"
+              @click="item.onClick ? item.onClick() : (showPopup = false)"
+            />
+          </template>
         </var-space>
 
         <div style="position: absolute; bottom: 0; width: 100%; margin-bottom: 20px">
@@ -80,55 +64,13 @@
               </var-tooltip>
             </div>
           </var-divider>
-
           <div class="divider-vertical-container">
-            <var-link
-              underline="none"
-              :href="`https://t.me/moreacg`"
-              target="_blank"
-              :text-color="linkColors.telegram"
-            >
-              频道
-            </var-link>
-            <var-divider vertical />
-            <var-link
-              underline="none"
-              :href="`https://krau.top`"
-              target="_blank"
-              :text-color="linkColors.blog"
-            >
-              Blog
-            </var-link>
-            <var-divider vertical />
-            <var-link
-              underline="none"
-              :href="`https://www.someacg.top`"
-              target="_blank"
-              :text-color="linkColors.someacg"
-            >
-              SomeACG
-            </var-link>
-            <var-divider vertical />
-            <var-link
-              underline="none"
-              :href="`https://www.moely.link/`"
-              target="_blank"
-              :text-color="linkColors.moely"
-            >
-              萌哩
-            </var-link>
-            <var-link
-              underline="none"
-              :href="`https://pic.cosine.ren/`"
-              target="_blank"
-              :text-color="linkColors.cosine"
-            >
-              Cosine 🎨 Gallery
-            </var-link>
-            <var-divider vertical />
-            <var-link underline="none" :href="`https://www.chooiin.com`" target="_blank">
-              初音导航
-            </var-link>
+            <template v-for="(link, index) in friendLinks" :key="link.href">
+              <var-divider v-if="index > 0 && !link.hideDivider" vertical />
+              <var-link underline="none" :href="link.href" target="_blank" :text-color="link.color">
+                {{ link.text }}
+              </var-link>
+            </template>
           </div>
         </div>
       </div>
@@ -141,7 +83,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { MyIPResponse } from '~/typing/artwork'
+import type { MyIPResponse } from '~/types/artwork'
+
 const toggleR18 = () => {
   const piniaStore = usePiniaStore()
   piniaStore.setR18(!piniaStore.r18)
@@ -191,6 +134,63 @@ const handleChangeTheme = () => {
   StyleProvider(currentTheme ? darkTheme : lightTheme)
   piniaStore.setpreferLight(!currentTheme)
 }
+
+const friendLinks = computed(() => [
+  {
+    href: 'https://t.me/moreacg',
+    text: '频道',
+    color: linkColors.value.telegram
+  },
+  {
+    href: 'https://krau.top',
+    text: 'Blog',
+    color: linkColors.value.blog
+  },
+  {
+    href: 'https://www.someacg.top',
+    text: 'SomeACG',
+    color: linkColors.value.someacg
+  },
+  {
+    href: 'https://www.moely.link/',
+    text: '萌哩',
+    color: linkColors.value.moely
+  },
+  {
+    href: 'https://pic.cosine.ren/',
+    text: 'Cosine 🎨 Gallery',
+    color: linkColors.value.cosine,
+    hideDivider: true
+  },
+  {
+    href: 'https://www.chooiin.com',
+    text: '初音导航',
+    color: undefined
+  }
+])
+
+const menuItems = computed(() => [
+  {
+    iconName: 'i-mdi:fire',
+    text: '随便看看',
+    to: '/random'
+  },
+  {
+    iconName: 'i-mdi:information-outline',
+    text: '关于',
+    to: '/about'
+  },
+  ...(isNotCN.value
+    ? [
+        {
+          iconName: r18StatusIcon.value,
+          text: 'R18',
+          to: '',
+          onClick: toggleR18
+        }
+      ]
+    : [])
+])
 
 const themeIcon = computed(() => {
   const piniaStore = usePiniaStore()

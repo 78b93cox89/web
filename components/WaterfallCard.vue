@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import type { WaterfallItem } from '~/typing/waterfall'
+import type { WaterfallItem } from '~/types/artwork'
 const props = withDefaults(
   defineProps<{
     item: WaterfallItem

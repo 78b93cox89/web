@@ -3,8 +3,7 @@ import { render } from 'vue'
 import WaterfallCard from '@/components/WaterfallCard.vue'
 import { Snackbar } from '@varlet/ui'
 import { useDebounceFn } from '@vueuse/core'
-import type { ArtworkListResponse } from '~/typing/artwork'
-import type { WaterfallItem } from '~/typing/waterfall'
+import type { ArtworkListResponse, WaterfallItem } from '~/types/artwork'
 
 function getRealHeight(item: WaterfallItem, realWidth: number) {
   if (typeof window === 'undefined') {
