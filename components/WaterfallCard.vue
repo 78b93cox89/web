@@ -9,7 +9,7 @@
       <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
         <div class="cover">
           <Transition>
-            <NuxtImg
+            <img
               :src="item.detail.pictures[0].thumbnail"
               :alt="item.detail.title"
               class="img"

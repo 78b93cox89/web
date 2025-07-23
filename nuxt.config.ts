@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     },
     apiBase: process.env.API_BASE
   },
-
   routeRules: {
     '/api/v1/artwork/random': {
       redirect: `${process.env.API_BASE}/artwork/random`
@@ -26,7 +25,6 @@ export default defineNuxtConfig({
   modules: [
     '@varlet/nuxt',
     '@pinia/nuxt',
-    '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-api-party',
     'nuxt-umami',
@@ -65,10 +63,6 @@ export default defineNuxtConfig({
 
   sitemap: {
     exclude: ['/register', '/profile']
-  },
-
-  ogImage: {
-    enabled: false
   },
 
   seo: {
