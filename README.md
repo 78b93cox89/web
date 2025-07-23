@@ -37,7 +37,7 @@ Fork 本仓库, 在 Vercel 中导入项目, 参考 `.env.example` 配置环境�
 
 ### Node
 
-参考 `.env.example` , 在终端中设置对应的环境变量
+参考 `.env.example` , 在项目目录下创建 `.env` 文件, 填写配置
 
 ```bash
 pnpm build
