@@ -96,13 +96,21 @@ const toggleR18 = () => {
 
 const isNotCN = ref<boolean>(false)
 
-onMounted(async () => {
-  const ipResp = await $acgapi<MyIPResponse>('/myip')
-  isNotCN.value = (ipResp && ipResp.country !== 'CN') || false
-  if (!isNotCN.value) {
-    const piniaStore = usePiniaStore()
-    piniaStore.setR18(false)
+const checkUserLocation = async () => {
+  try {
+    const ipResp = await $acgapi<MyIPResponse>('/myip')
+    isNotCN.value = (ipResp && ipResp.country !== 'CN') || false
+    if (!isNotCN.value) {
+      const piniaStore = usePiniaStore()
+      piniaStore.setR18(false)
+    }
+  } catch (error) {
+    console.warn('Failed to check user location:', error)
   }
+}
+
+onMounted(() => {
+  checkUserLocation()
 })
 
 const r18StatusIcon = computed(() => {
