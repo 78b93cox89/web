@@ -142,7 +142,7 @@ import fileSaver from 'file-saver'
 const { saveAs } = fileSaver
 import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
-import type { Artwork, ArtworkDetailResponse, Picture } from '~/typing/artwork'
+import type { Artwork, ArtworkDetailResponse, Picture } from '~/types/artwork'
 
 const route = useRoute()
 const artworkStore = useArtworkStore()

@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ArtworkListResponse } from '~/typing/artwork'
+import type { ArtworkListResponse } from '~/types/artwork'
 
 const isAutoScrolling = ref(false)
 let scrollInterval: NodeJS.Timeout

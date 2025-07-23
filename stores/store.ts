@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Artwork } from '~/typing/artwork'
+import type { Artwork } from '~/types/artwork'
 
 export const usePiniaStore = defineStore('ManyACG', {
   state: () => ({

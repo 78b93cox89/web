@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ArtistResponse } from '~/typing/artwork'
+import type { ArtistResponse } from '~/types/artwork'
 
 const route = useRoute()
 const containerRef = ref<HTMLElement | null>(null)
