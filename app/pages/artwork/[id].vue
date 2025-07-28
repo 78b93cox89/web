@@ -172,7 +172,7 @@ const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId))
 const downloadAvailable = ref(false)
 const pictureRegularUrls = computed(() => artwork.value?.pictures.map((picture) => picture.regular))
 
-if (artwork.value === null) {
+if (artwork.value == null) {
   try {
     const data = await $acgapi<ArtworkDetailResponse>(`/artwork/${artworkId}`)
     if (data.status === 200) {
@@ -371,15 +371,15 @@ const searchSimilar = () => {
 <style scoped>
 .container {
   margin: 0 auto;
-  max-width: 1600px;
+  /* max-width: 1600px; */
   padding: 20px;
 }
 
-@media (min-width: 2000px) {
+/* @media (min-width: 2000px) {
   .container {
-    max-width: 80%;
+    max-width: 90%;
   }
-}
+} */
 
 .artwork-container {
   display: flex;

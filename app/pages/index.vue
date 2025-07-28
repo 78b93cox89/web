@@ -16,17 +16,10 @@ useHead({
 <style scoped>
 .index-contanier {
   margin: 0 auto;
-  max-width: 95%;
 }
 
 .title-text {
   font-size: 24px;
   font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .index-contanier {
-    max-width: 100%;
-  }
 }
 </style>

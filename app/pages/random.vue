@@ -13,12 +13,5 @@ useHead({
 <style scoped>
 .contanier {
   margin: 0 auto;
-  max-width: 95%;
-}
-
-@media (max-width: 768px) {
-  .contanier {
-    max-width: 100%;
-  }
 }
 </style>

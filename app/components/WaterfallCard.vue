@@ -101,7 +101,7 @@ const handleRightClick = (item: WaterfallItem) => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 

@@ -46,9 +46,9 @@ const useWaterfall = ({
     preloadScreenCount: [1, 3] as [number, number],
     virtual: true,
     gap: useWaterfallGap(),
-    itemMinWidth: 300,
+    itemMinWidth: 320,
     minColumnCount: 2,
-    maxColumnCount: 7
+    maxColumnCount: 10
   })
 
   const calcItemHeight = (item: WaterfallItem, itemWidth: number) => {
