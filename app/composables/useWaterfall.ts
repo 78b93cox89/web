@@ -46,6 +46,7 @@ const useWaterfall = ({
     preloadScreenCount: [1, 3] as [number, number],
     virtual: true,
     gap: useWaterfallGap(),
+    enableCache: true,
     itemMinWidth: 320,
     minColumnCount: 2,
     maxColumnCount: 10
