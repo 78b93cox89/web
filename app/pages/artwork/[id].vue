@@ -27,40 +27,43 @@
               </div>
             </div>
           </div>
-
           <div class="artwork-info">
             <div class="artwork-title">{{ artwork?.title }}</div>
+            <div class="author-source-section">
+              <var-link
+                class="info-link artwork-artist"
+                underline="none"
+                :to="`/artist/${artwork?.artist.id}`"
+              >
+                <var-icon name="account-circle" />
+                {{ artwork?.artist.name }}
+              </var-link>
 
-            <var-link
-              underline="none"
-              class="info-link source-url-link"
-              :href="artwork?.source_url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              → {{ artwork?.source_type }}
-            </var-link>
-
-            <var-link
-              class="info-link artwork-artist"
-              underline="none"
-              :to="`/artist/${artwork?.artist.id}`"
-            >
-              <var-icon name="account-circle" />
-              {{ artwork?.artist.name }}
-            </var-link>
-
-            <div class="artwork-tags">
-              <tag-chip v-for="tag in artwork?.tags" :key="tag" :text="tag" />
+              <var-link
+                underline="none"
+                class="info-link source-url-link"
+                :href="artwork?.source_url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                → {{ artwork?.source_type }}
+              </var-link>
             </div>
 
-            <div
-              class="artwork-description"
-              :line-clamp="5"
-              :tooltip="false"
-              expand-trigger="click"
-            >
-              <div style="white-space: pre-wrap">{{ artwork?.description }}</div>
+            <div class="artwork-description scrollable-content">
+              <div style="white-space: pre-wrap">
+                {{ artwork?.description || '作者什么都没说呢喵' }}
+              </div>
+            </div>
+
+            <div class="tags-section" v-if="artwork?.tags?.length">
+              <div class="tags-header">
+                <var-icon name="tag-multiple" size="16" />
+                <span class="tags-label">标签</span>
+              </div>
+              <div class="artwork-tags">
+                <tag-chip v-for="tag in artwork?.tags" :key="tag" :text="tag" />
+              </div>
             </div>
 
             <div class="artwork-action">
@@ -334,30 +337,58 @@ const searchSimilar = () => {
   display: flex;
   flex-direction: column;
   max-width: 30%;
+  height: 90vh;
+  overflow: hidden;
 }
 
 .artwork-title {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   word-break: break-all;
   overflow-wrap: break-word;
+  flex-shrink: 0;
+}
+
+.info-inline-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.author-source-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-shrink: 0;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsla(var(--hsl-text), 0.7);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .info-link {
   display: block;
   text-align: center;
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 16px;
   border-radius: 10px;
-  padding: 5px;
-  transition: background-color 0.2s ease;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-decoration: none;
+  flex: 1;
 }
 
 .info-link:hover {
   background-color: rgba(192, 238, 240, 0.5);
+  transform: translateY(-1px);
 }
 
 .source-url-link {
@@ -366,34 +397,108 @@ const searchSimilar = () => {
 }
 
 .artwork-artist {
-  gap: 5px;
-  align-self: start;
-  max-width: 100%;
-  white-space: normal;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(192, 238, 240, 0.2);
+}
+
+.artwork-description {
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  flex: 1;
+  padding: 15px;
+  margin: 15px 0;
+  background-color: rgba(192, 238, 240, 0.1);
+  border-radius: 12px;
+  border-left: 4px solid rgba(192, 238, 240, 0.6);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192, 238, 240, 0.5) transparent;
+}
+
+.artwork-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.artwork-description::-webkit-scrollbar-track {
+  background: rgba(192, 238, 240, 0.1);
+  border-radius: 3px;
+}
+
+.artwork-description::-webkit-scrollbar-thumb {
+  background-color: rgba(192, 238, 240, 0.5);
+  border-radius: 3px;
+}
+
+.artwork-description::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(192, 238, 240, 0.7);
+}
+
+.artwork-description.scrollable-content {
+  flex: 1;
+  min-height: 0;
+}
+
+.tags-section {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: rgba(192, 238, 240, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(192, 238, 240, 0.2);
+  flex-shrink: 0;
+}
+
+.tags-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tags-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: hsla(var(--hsl-text), 0.8);
 }
 
 .artwork-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 10px;
+  gap: 6px;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(192, 238, 240, 0.5) transparent;
 }
 
-.artwork-description {
-  font-size: 16px;
-  line-height: 1.5;
-  word-break: break-all;
-  overflow-wrap: break-word;
+.artwork-tags::-webkit-scrollbar {
+  width: 4px;
+}
+
+.artwork-tags::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.artwork-tags::-webkit-scrollbar-thumb {
+  background-color: rgba(192, 238, 240, 0.5);
+  border-radius: 2px;
 }
 
 .artwork-action {
-  margin-top: auto;
-  border-radius: 10px;
-  padding: 10px;
+  margin-top: 15px;
+  border-radius: 12px;
+  padding: 15px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
   align-items: center;
+  background-color: rgba(192, 238, 240, 0.1);
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .similar-title {
@@ -416,9 +521,54 @@ const searchSimilar = () => {
   .artwork-info {
     max-width: 100%;
   }
+  .artwork-info {
+    height: auto;
+    max-height: 70vh;
+  }
+
+  .artwork-description.scrollable-content {
+    max-height: 200px;
+  }
+
+  .artwork-tags {
+    max-height: 80px;
+  }
 
   .artwork-container .picture-card {
     width: 100% !important;
+  }
+  .info-label {
+    font-size: 13px;
+  }
+
+  .info-link {
+    font-size: 15px;
+    padding: 6px 10px;
+  }
+
+  .artwork-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .artwork-action {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .author-source-section {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .artwork-description {
+    padding: 12px;
+    margin: 12px 0;
+  }
+
+  .tags-section {
+    padding: 12px;
   }
 }
 
