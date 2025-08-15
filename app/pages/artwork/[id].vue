@@ -168,7 +168,7 @@ const { waterfallOption, result, calcItemHeight } = useWaterfall({
   similarTarget: artworkId
 })
 
-const artwork = ref<Artwork>(artworkStore.getArtwork(artworkId))
+const artwork = ref<Artwork | null>(artworkStore.getArtwork(artworkId))
 
 const downloadAvailable = ref(false)
 const pictureRegularUrls = computed(() => artwork.value?.pictures.map((picture) => picture.regular))
@@ -191,23 +191,23 @@ if (artwork.value == null) {
 }
 
 useHead({
-  title: `${artwork.value.title}`
+  title: `${artwork.value?.title}`
 })
-const ogImageUrl = artwork.value.r18
+const ogImageUrl = artwork.value?.r18
   ? '/og-image/nsfw.webp'
-  : artwork.value.pictures[0].regular.endsWith('.avif')
-  ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].regular}&output=jpg`
-  : artwork.value.pictures[0].regular
+  : artwork.value?.pictures[0]?.regular.endsWith('.avif')
+  ? `https://wsrv.unv.app/?url=${artwork.value?.pictures[0].regular}&output=jpg`
+  : artwork.value?.pictures[0]?.regular
 
 useSeoMeta({
-  description: `${artwork.value.description}`,
-  ogTitle: `${artwork.value.title} | ManyACG`,
-  ogDescription: `${artwork.value.description}`,
+  description: `${artwork.value?.description}`,
+  ogTitle: `${artwork.value?.title} | ManyACG`,
+  ogDescription: `${artwork.value?.description}`,
   ogImage: ogImageUrl,
   ogType: 'article',
   twitterCard: 'summary_large_image',
-  twitterTitle: `${artwork.value.title} | ManyACG`,
-  twitterDescription: `${artwork.value.description}`,
+  twitterTitle: `${artwork.value?.title} | ManyACG`,
+  twitterDescription: `${artwork.value?.description}`,
   twitterImage: ogImageUrl
 })
 
@@ -216,7 +216,7 @@ const imageLoad = (index: number) => {
   if (index === 0) {
     loading.value = false
     setTimeout(() => {
-      document.body.style.backgroundImage = `url(${artwork.value?.pictures[0].regular})`
+      document.body.style.backgroundImage = `url(${artwork.value?.pictures[0]?.regular})`
     }, 1000)
   }
 }
@@ -230,7 +230,7 @@ onActivated(() => {
     return
   }
   setTimeout(() => {
-    document.body.style.backgroundImage = `url(${artwork.value?.pictures[0].regular})`
+    document.body.style.backgroundImage = `url(${artwork.value?.pictures[0]?.regular})`
   }, 1000)
 })
 
@@ -251,7 +251,7 @@ const downloadPictures = async () => {
 
   if (artwork.value.pictures.length === 1) {
     try {
-      const resp = await $acgapi<Blob>(`/picture/file/${artwork.value.pictures[0].id}`, {
+      const resp = await $acgapi<Blob>(`/picture/file/${artwork.value.pictures[0]?.id}`, {
         onRequestError({ error }) {
           Snackbar({
             content: `请求失败: ${error.message}`,
@@ -276,7 +276,7 @@ const downloadPictures = async () => {
         }
       })
       if (resp) {
-        saveAs(resp, artwork.value.pictures[0].file_name)
+        saveAs(resp, artwork.value.pictures[0]?.file_name)
         Snackbar.clear()
       }
     } finally {
