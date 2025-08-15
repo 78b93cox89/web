@@ -4,7 +4,7 @@
       <var-progress :value="downloadProgress" v-if="downloadProgress > 0" />
     </ClientOnly>
 
-    <var-skeleton :loading="loading" fullscreen></var-skeleton>
+    <var-skeleton :loading="loading" fullscreen />
 
     <Transition>
       <div class="container" v-show="!loading">
@@ -15,7 +15,7 @@
                 class="picture-card var-elevation--2"
                 v-for="(picture, index) in artwork?.pictures"
                 :key="picture.id"
-                :style="adjustPictureSize(picture)"
+                :style="{ width: pictureWidth(picture), height: 'auto' }"
               >
                 <detail-image
                   :index="index"
@@ -33,7 +33,7 @@
 
             <var-link
               underline="none"
-              class="source-url-link"
+              class="info-link source-url-link"
               :href="artwork?.source_url"
               target="_blank"
               rel="noopener noreferrer"
@@ -41,20 +41,24 @@
               → {{ artwork?.source_type }}
             </var-link>
 
-            <var-link class="artwork-artist" underline="none" :to="`/artist/${artwork?.artist.id}`">
+            <var-link
+              class="info-link artwork-artist"
+              underline="none"
+              :to="`/artist/${artwork?.artist.id}`"
+            >
               <var-icon name="account-circle" />
               {{ artwork?.artist.name }}
             </var-link>
-            <div>
-              <div class="artwork-tags">
-                <tag-chip v-for="tag in artwork?.tags" :key="tag" :text="tag" />
-              </div>
+
+            <div class="artwork-tags">
+              <tag-chip v-for="tag in artwork?.tags" :key="tag" :text="tag" />
             </div>
+
             <div
+              class="artwork-description"
               :line-clamp="5"
               :tooltip="false"
               expand-trigger="click"
-              class="artwork-description"
             >
               <div style="white-space: pre-wrap">{{ artwork?.description }}</div>
             </div>
@@ -72,42 +76,21 @@
               >
                 <var-icon name="download-outline" />
               </var-button>
-              <var-menu placement="top-start">
-                <var-button
-                  size="large"
-                  title="相关推荐"
-                  text-color="#f92f60"
-                  @click="searchSimilar"
-                >
-                  <var-icon name="camera-outline" />
-                </var-button>
-              </var-menu>
+              <var-button size="large" title="相关推荐" text-color="#f92f60" @click="searchSimilar">
+                <var-icon name="camera-outline" />
+              </var-button>
             </div>
           </div>
         </div>
+
         <div class="artwork-similar">
           <var-divider>
-            <div
-              style="
-                font-size: large;
-                margin: 0 16px;
-                text-align: center;
-                color: hsla(var(--hsl-text), 0.8);
-              "
-            >
-              相关推荐
-            </div>
+            <div class="similar-title">相关推荐</div>
           </var-divider>
           <VirtualWaterfall
-            :virtual="waterfallOption.virtual"
-            :gap="waterfallOption.gap"
-            :preload-screen-count="waterfallOption.preloadScreenCount"
-            :item-min-width="waterfallOption.itemMinWidth"
-            :max-column-count="waterfallOption.maxColumnCount"
-            :min-column-count="waterfallOption.minColumnCount"
+            v-bind="waterfallOption"
             :calc-item-height="calcItemHeight"
             :items="result.list"
-            :enable-cache="waterfallOption.enableCache"
           >
             <template #default="scope">
               <WaterfallCard v-if="scope?.item" :item="scope.item" />
@@ -122,8 +105,7 @@
 <script lang="ts" setup>
 import { ref, computed, onDeactivated, onActivated } from 'vue'
 import { BlobReader, BlobWriter, ZipWriter } from '@zip.js/zip.js'
-import fileSaver from 'file-saver'
-const { saveAs } = fileSaver
+import { saveAs } from 'file-saver'
 import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
 import type { Artwork, ArtworkDetailResponse, Picture } from '~/types/artwork'
@@ -132,31 +114,41 @@ const route = useRoute()
 const artworkStore = useArtworkStore()
 const artworkId = route.params.id as string
 
-const adjustPictureSize = (picture: Picture) => {
-  const ratio = picture.width / picture.height
-  if (ratio > 1) {
-    return {
-      width: '100%',
-      height: 'auto'
-    }
-  } else {
-    return {
-      width: `${ratio * 100}%`,
-      height: 'auto'
-    }
+const BACKGROUND_DELAY = 1000
+const DOWNLOAD_CONCURRENCY = 3
+const SNACKBAR_CLEAR_DELAY = 3000
+
+const artwork = ref<Artwork | null>(artworkStore.getArtwork(artworkId))
+const downloadAvailable = ref(false)
+const loading = ref(true)
+const downloadedCount = ref(0)
+
+const pictureRegularUrls = computed(() => artwork.value?.pictures.map((p) => p.regular) || [])
+const downloadProgress = computed(() => {
+  if (!artwork.value?.pictures?.length) return 0
+  return (downloadedCount.value / artwork.value.pictures.length) * 100
+})
+
+const pictureWidth = (picture: Picture) =>
+  picture.width / picture.height > 1 ? '100%' : `${(picture.width / picture.height) * 100}%`
+
+const showSnackbar = (content: string, type: 'success' | 'error' | 'warning' = 'error') => {
+  Snackbar({ content, position: 'bottom', type })
+}
+
+const handleApiError = (error: any, response?: any) => {
+  if (response?.status === 401) {
+    throw new Error('这张图片需要登录后才能下载哦')
   }
+  throw new Error(error.message || `响应失败: ${response?.statusText || response?.status}`)
 }
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   similarTarget: artworkId
 })
 
-const artwork = ref<Artwork | null>(artworkStore.getArtwork(artworkId))
-
-const downloadAvailable = ref(false)
-const pictureRegularUrls = computed(() => artwork.value?.pictures.map((picture) => picture.regular))
-
-if (artwork.value == null) {
+// 获取作品数据
+if (!artwork.value) {
   try {
     const data = await $acgapi<ArtworkDetailResponse>(`/artwork/${artworkId}`)
     if (data.status === 200) {
@@ -173,166 +165,126 @@ if (artwork.value == null) {
   downloadAvailable.value = true
 }
 
-useHead({
-  title: `${artwork.value?.title}`
-})
-const ogImageUrl = artwork.value?.r18
-  ? '/og-image/nsfw.webp'
-  : artwork.value?.pictures[0]?.regular.endsWith('.avif')
-  ? `https://wsrv.unv.app/?url=${artwork.value?.pictures[0].regular}&output=jpg`
-  : artwork.value?.pictures[0]?.regular
+const setupSEO = () => {
+  if (!artwork.value) return
 
-useSeoMeta({
-  description: `${artwork.value?.description}`,
-  ogTitle: `${artwork.value?.title} | ManyACG`,
-  ogDescription: `${artwork.value?.description}`,
-  ogImage: ogImageUrl,
-  ogType: 'article',
-  twitterCard: 'summary_large_image',
-  twitterTitle: `${artwork.value?.title} | ManyACG`,
-  twitterDescription: `${artwork.value?.description}`,
-  twitterImage: ogImageUrl
-})
+  useHead({ title: artwork.value.title })
 
-const loading = ref(true)
+  const ogImageUrl = artwork.value.r18
+    ? '/og-image/nsfw.webp'
+    : artwork.value.pictures[0]?.regular.endsWith('.avif')
+    ? `https://wsrv.unv.app/?url=${artwork.value.pictures[0].regular}&output=jpg`
+    : artwork.value.pictures[0]?.regular
+  const seoData = {
+    description: artwork.value.description,
+    ogTitle: `${artwork.value.title} | ManyACG`,
+    ogDescription: artwork.value.description,
+    ogImage: ogImageUrl,
+    ogType: 'article' as const,
+    twitterCard: 'summary_large_image' as const,
+    twitterTitle: `${artwork.value.title} | ManyACG`,
+    twitterDescription: artwork.value.description,
+    twitterImage: ogImageUrl
+  }
+
+  useSeoMeta(seoData)
+}
+
+setupSEO()
+
+const setBackgroundImage = () => {
+  const firstPicture = artwork.value?.pictures?.[0]
+  if (!firstPicture) return
+  setTimeout(() => {
+    document.body.style.backgroundImage = `url(${firstPicture.regular})`
+  }, BACKGROUND_DELAY)
+}
+
+const clearBackgroundImage = () => {
+  document.body.style.backgroundImage = ''
+}
+
 const imageLoad = (index: number) => {
   if (index === 0) {
     loading.value = false
-    setTimeout(() => {
-      document.body.style.backgroundImage = `url(${artwork.value?.pictures[0]?.regular})`
-    }, 1000)
+    setBackgroundImage()
   }
 }
 
-onDeactivated(() => {
-  document.body.style.backgroundImage = ''
-})
-
+onDeactivated(clearBackgroundImage)
 onActivated(() => {
-  if (loading.value) {
-    return
-  }
-  setTimeout(() => {
-    document.body.style.backgroundImage = `url(${artwork.value?.pictures[0]?.regular})`
-  }, 1000)
+  if (!loading.value) setBackgroundImage()
 })
 
-const downloadedCount = ref(0)
-const downloadProgress = computed(() => {
-  if (!artwork.value) {
-    return 0
-  }
-  return (downloadedCount.value / artwork.value.pictures.length) * 100
-})
-
-const downloadPictures = async () => {
-  if (!downloadAvailable.value || !artwork.value) {
-    return
-  }
-
-  downloadAvailable.value = false
-
-  if (artwork.value.pictures.length === 1) {
-    try {
-      const resp = await $acgapi<Blob>(`/picture/file/${artwork.value.pictures[0]?.id}`, {
-        onRequestError({ error }) {
-          Snackbar({
-            content: `请求失败: ${error.message}`,
-            position: 'bottom',
-            type: 'error'
-          })
-        },
-        onResponseError({ response }) {
-          if (response.status === 401) {
-            Snackbar({
-              content: '这张图片需要登录后才能下载哦',
-              position: 'bottom',
-              type: 'error'
-            })
-          } else {
-            Snackbar({
-              content: `响应失败: ${response.statusText || response.status}`,
-              position: 'bottom',
-              type: 'error'
-            })
-          }
-        }
-      })
-      if (resp) {
-        saveAs(resp, artwork.value.pictures[0]?.file_name)
-        Snackbar.clear()
-      }
-    } finally {
-      downloadAvailable.value = true
-    }
-    return
-  }
-
-  const zip = new ZipWriter(new BlobWriter('application/zip'), {
-    zip64: true
+// 下载功能
+const downloadSinglePicture = async (picture: Picture) => {
+  const resp = await $acgapi<Blob>(`/picture/file/${picture.id}`, {
+    onRequestError: ({ error }) => handleApiError(error),
+    onResponseError: ({ response }) => handleApiError(null, response)
   })
+
+  if (resp) {
+    saveAs(resp, picture.file_name)
+    Snackbar.clear()
+  }
+}
+
+const downloadMultiplePictures = async () => {
+  const zip = new ZipWriter(new BlobWriter('application/zip'), { zip64: true })
   const failedDownloads: string[] = []
 
-  try {
-    const downloadPicture = async (picture: Picture) => {
-      try {
-        const resp = await $acgapi<Blob>(`/picture/file/${picture.id}`, {
-          onRequestError({ error }) {
-            throw new Error(`请求失败: ${error.message}`)
-          },
-          onResponseError({ response }) {
-            if (response.status === 401) {
-              throw new Error('这张图片需要登录后才能下载哦')
-            } else {
-              throw new Error(`响应失败: ${response.statusText || response.status}`)
-            }
-          }
-        })
-
-        if (resp) {
-          await zip.add(picture.file_name, new BlobReader(resp))
-        } else {
-          throw new Error('响应为空')
-        }
-        return picture.file_name
-      } catch (error) {
-        failedDownloads.push(picture.file_name)
-        throw error
-      }
-    }
-
-    for await (const fileName of asyncPool(3, artwork.value.pictures, downloadPicture)) {
-      downloadedCount.value++
-      console.log(`下载完成: ${fileName}`)
-      console.log(`当前下载进度: ${downloadedCount.value}/${artwork.value.pictures.length}`)
-    }
-
-    if (failedDownloads.length > 0) {
-      Snackbar({
-        content: `有 ${failedDownloads.length} 张图片下载失败`,
-        position: 'bottom',
-        type: 'warning'
+  const downloadPicture = async (picture: Picture) => {
+    try {
+      const resp = await $acgapi<Blob>(`/picture/file/${picture.id}`, {
+        onRequestError: ({ error }) => handleApiError(error),
+        onResponseError: ({ response }) => handleApiError(null, response)
       })
+
+      if (resp) {
+        await zip.add(picture.file_name, new BlobReader(resp))
+      } else {
+        throw new Error('响应为空')
+      }
+      return picture.file_name
+    } catch (error) {
+      failedDownloads.push(picture.file_name)
+      throw error
     }
-    const zipFile = await zip.close()
-    saveAs(zipFile, `${artwork.value.title}.zip`)
-    Snackbar({
-      content: '下载完成',
-      position: 'bottom',
-      type: 'success'
-    })
+  }
+
+  for await (const fileName of asyncPool(
+    DOWNLOAD_CONCURRENCY,
+    artwork.value!.pictures,
+    downloadPicture
+  )) {
+    downloadedCount.value++
+  }
+
+  if (failedDownloads.length > 0) {
+    showSnackbar(`有 ${failedDownloads.length} 张图片下载失败`, 'warning')
+  }
+
+  const zipFile = await zip.close()
+  saveAs(zipFile, `${artwork.value!.title}.zip`)
+  showSnackbar('下载完成', 'success')
+}
+
+const downloadPictures = async () => {
+  if (!downloadAvailable.value || !artwork.value) return
+
+  downloadAvailable.value = false
+  try {
+    if (artwork.value.pictures.length === 1) {
+      await downloadSinglePicture(artwork.value.pictures[0]!)
+    } else {
+      await downloadMultiplePictures()
+    }
   } catch (e: any) {
-    Snackbar({
-      content: `下载过程发生错误: ${e.message}`,
-      position: 'bottom',
-      type: 'error'
-    })
+    showSnackbar(`下载过程发生错误: ${e.message}`)
   } finally {
     downloadAvailable.value = true
     downloadedCount.value = 0
-    setTimeout(() => {
-      Snackbar.clear()
-    }, 3000)
+    setTimeout(() => Snackbar.clear(), SNACKBAR_CLEAR_DELAY)
   }
 }
 
@@ -344,13 +296,13 @@ const previewImage = (index: number) => {
     closeOnKeyEscape: true
   })
 }
+
 const searchSimilar = () => {
   navigateTo(`/search/result?similar_target=${artworkId}`)
 }
 </script>
 
 <style scoped>
-
 .artwork-container {
   display: flex;
   gap: 20px;
@@ -392,47 +344,32 @@ const searchSimilar = () => {
   overflow-wrap: break-word;
 }
 
-.artwork-stat {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 18px;
-  margin-bottom: 10px;
-  margin-left: 5px;
-}
-
-.source-url-link {
+.info-link {
   display: block;
   text-align: center;
   font-size: 18px;
   margin-bottom: 10px;
-  background-color: rgba(192, 238, 240, 0.3);
   border-radius: 10px;
-  padding: 5px 5px;
+  padding: 5px;
   transition: background-color 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.info-link:hover {
+  background-color: rgba(192, 238, 240, 0.5);
+}
+
+.source-url-link {
+  background-color: rgba(192, 238, 240, 0.3);
   font-weight: bold;
 }
 
-.source-url-link:hover {
-  background-color: rgba(192, 238, 240, 0.5);
-}
-
 .artwork-artist {
-  border-radius: 10px;
-  margin-bottom: 10px;
-  padding: 5px 5px;
   gap: 5px;
-  font-size: 18px;
-  transition: background-color 0.2s ease;
   align-self: start;
   max-width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
   white-space: normal;
-}
-
-.artwork-artist:hover {
-  background-color: rgba(192, 238, 240, 0.5);
 }
 
 .artwork-tags {
@@ -452,12 +389,18 @@ const searchSimilar = () => {
 .artwork-action {
   margin-top: auto;
   border-radius: 10px;
-  padding: 10px 10px;
+  padding: 10px;
   display: flex;
   gap: 10px;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.2s ease;
+}
+
+.similar-title {
+  font-size: large;
+  margin: 0 16px;
+  text-align: center;
+  color: hsla(var(--hsl-text), 0.8);
 }
 
 @media (max-width: 1000px) {
