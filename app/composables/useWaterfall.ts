@@ -57,9 +57,11 @@ const useWaterfall = ({
     if (!waterfallOption.onlyImage && typeof window !== 'undefined') {
       extraHeight = getRealHeight(item, itemWidth)
     }
-    return (
-      item.detail.pictures[0].height * (itemWidth / item.detail.pictures[0].width) + extraHeight
-    )
+    const picture = item.detail.pictures?.[0]
+    if (!picture) {
+      return 0
+    }
+    return picture.height * (itemWidth / picture.width) + extraHeight
   }
 
   const fetchParams = reactive({

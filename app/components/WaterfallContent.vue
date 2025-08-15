@@ -39,12 +39,7 @@ const props = withDefaults(
   }
 )
 
-const containerRef = ref<HTMLElement | null>(null)
-onMounted(() => {
-  if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + 'px'
-  }
-})
+const { containerRef } = useWaterfallContainer()
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   mode: props.mode

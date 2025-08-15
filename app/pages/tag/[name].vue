@@ -52,16 +52,10 @@ useSeoMeta({
   description: `${tagName}标签下的作品 | ManyACG`,
   ogDescription: `${tagName}标签下的作品 | ManyACG`,
   twitterDescription: `${tagName}标签下的作品 | ManyACG`,
-  twitterTitle: `#${tagName} | ManyACG`,
-  twitterCard: 'summary'
+  twitterTitle: `#${tagName} | ManyACG`,  twitterCard: 'summary'
 })
 
-const containerRef = ref<HTMLElement>()
-onMounted(() => {
-  if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + 'px'
-  }
-})
+const { containerRef } = useWaterfallContainer()
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   tag: `${route.params.name}`,

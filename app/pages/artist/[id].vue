@@ -46,12 +46,7 @@
 import type { ArtistResponse } from '~/types/artwork'
 
 const route = useRoute()
-const containerRef = ref<HTMLElement | null>(null)
-onMounted(() => {
-  if (containerRef.value) {
-    containerRef.value.style.height = window.innerHeight - 64 + 'px'
-  }
-})
+const { containerRef } = useWaterfallContainer()
 
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   artistId: `${route.params.id}`,
