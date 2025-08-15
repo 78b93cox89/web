@@ -108,7 +108,8 @@
 <script lang="ts" setup>
 import { ref, computed, onDeactivated, onActivated } from 'vue'
 import { BlobReader, BlobWriter, ZipWriter } from '@zip.js/zip.js'
-import { saveAs } from 'file-saver'
+import filesaver from 'file-saver'
+const { saveAs } = filesaver
 import { ImagePreview, Snackbar } from '@varlet/ui'
 import asyncPool from 'tiny-async-pool'
 import type { Artwork, ArtworkDetailResponse, Picture } from '~/types/artwork'
