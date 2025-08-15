@@ -47,24 +47,7 @@
             </var-link>
             <div>
               <div class="artwork-tags">
-                <tag-chip v-for="tag in artwork?.tags.slice(0, 10)" :key="tag" :text="tag" />
-              </div>
-              <div v-if="artwork && artwork?.tags.length > 10">
-                <var-collapse-transition :expand="expandedTags">
-                  <div class="artwork-tags">
-                    <tag-chip v-for="tag in artwork?.tags.slice(10)" :key="tag" :text="tag" />
-                  </div>
-                </var-collapse-transition>
-                <var-divider hairline>
-                  <var-button
-                    size="small"
-                    @click="expandedTags = !expandedTags"
-                    title="展开/收起标签"
-                    style="margin: 0 8px"
-                  >
-                    <var-icon :name="expandedTags ? 'chevron-up' : 'chevron-down'" />
-                  </var-button>
-                </var-divider>
+                <tag-chip v-for="tag in artwork?.tags" :key="tag" :text="tag" />
               </div>
             </div>
             <div
@@ -361,26 +344,12 @@ const previewImage = (index: number) => {
     closeOnKeyEscape: true
   })
 }
-
-const expandedTags = ref(false)
-
 const searchSimilar = () => {
   navigateTo(`/search/result?similar_target=${artworkId}`)
 }
 </script>
 
 <style scoped>
-.container {
-  margin: 0 auto;
-  /* max-width: 1600px; */
-  padding: 20px;
-}
-
-/* @media (min-width: 2000px) {
-  .container {
-    max-width: 90%;
-  }
-} */
 
 .artwork-container {
   display: flex;
