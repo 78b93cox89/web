@@ -55,24 +55,6 @@
             />
           </template>
         </var-space>
-
-        <div style="position: absolute; bottom: 0; width: 100%; margin-bottom: 20px">
-          <var-divider>
-            <div style="text-align: center; margin: 0 16px 8px">
-              <var-tooltip content="申请友联请联系 link@manyacg.top" placement="right-end">
-                友情链接
-              </var-tooltip>
-            </div>
-          </var-divider>
-          <div class="divider-vertical-container">
-            <template v-for="(link, index) in friendLinks" :key="link.href">
-              <var-divider v-if="index > 0 && !link.hideDivider" vertical />
-              <var-link underline="none" :href="link.href" target="_blank" :text-color="link.color">
-                {{ link.text }}
-              </var-link>
-            </template>
-          </div>
-        </div>
       </div>
     </var-popup>
 
@@ -125,8 +107,6 @@ const showFabButton = computed(() => {
 const showPopup = ref(false)
 const showSearchDialog = ref(false)
 
-const linkColors = useLinkColors()
-
 const handleRSSClick = () => {
   navigateTo('/atom.xml', {
     external: true,
@@ -143,45 +123,16 @@ const handleChangeTheme = () => {
   piniaStore.setpreferLight(!currentTheme)
 }
 
-const friendLinks = computed(() => [
-  {
-    href: 'https://t.me/moreacg',
-    text: '频道',
-    color: linkColors.value.telegram
-  },
-  {
-    href: 'https://krau.top',
-    text: 'Blog',
-    color: linkColors.value.blog
-  },
-  {
-    href: 'https://www.someacg.top',
-    text: 'SomeACG',
-    color: linkColors.value.someacg
-  },
-  {
-    href: 'https://www.moely.link/',
-    text: '萌哩',
-    color: linkColors.value.moely
-  },
-  {
-    href: 'https://pic.cosine.ren/',
-    text: 'Cosine 🎨 Gallery',
-    color: linkColors.value.cosine,
-    hideDivider: true
-  },
-  {
-    href: 'https://www.chooiin.com',
-    text: '初音导航',
-    color: undefined
-  }
-])
-
 const menuItems = computed(() => [
   {
     iconName: 'i-mdi:fire',
     text: '随便看看',
     to: '/random'
+  },
+  {
+    iconName: 'i-mdi:link-variant',
+    text: '友情链接',
+    to: '/link'
   },
   {
     iconName: 'i-mdi:information-outline',
@@ -210,16 +161,6 @@ const themeIcon = computed(() => {
 .popup-content {
   width: 300px;
 }
-
-.divider-vertical-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #333;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
 #close-popup-button {
   margin: 8px;
 }
