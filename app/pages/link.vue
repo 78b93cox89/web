@@ -129,7 +129,7 @@ const friendLinks: Link[] = [
     lightColor: '#535177',
     darkColor: '#8a85c5',
     avatar: 'https://pic.cosine.ren/favicon.ico',
-    desc: '精美的图片画廊，艺术作品展示'
+    desc: '一个精选的 ACG 图片频道网站，旨在为用户提供高质量的图片资源'
   },
   {
     link: 'https://www.chooiin.com',
