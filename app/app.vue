@@ -1,9 +1,7 @@
 <template>
   <NuxtLoadingIndicator :throttle="100" />
   <NuxtLayout>
-    <div>
-      <NuxtPage keepalive />
-    </div>
+    <NuxtPage keepalive />
   </NuxtLayout>
 </template>
 
