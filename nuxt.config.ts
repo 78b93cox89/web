@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-11',
   devtools: { enabled: true },
+  ssr: false,
   runtimeConfig: {
     public: {
       botUsername: process.env.NUXT_PUBLIC_BOT_USERNAME

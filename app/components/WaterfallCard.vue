@@ -10,14 +10,15 @@
         <div class="cover">
           <Transition>
             <img
-              :src="item.detail.pictures[0].thumbnail"
+              :src="firstPic?.thumbnail"
               :alt="item.detail.title"
               class="img"
+              loading="lazy"
               v-if="loaded"
             />
           </Transition>
         </div>
-        <div class="overlay">
+        <div class="overlay" v-if="!onlyImage">
           <div class="card-body">
             <h3>{{ item.detail.title }}</h3>
             <div class="author">
@@ -45,36 +46,36 @@ const props = withDefaults(
   defineProps<{
     item: WaterfallItem
     onlyImage?: boolean
-    noImage?: boolean
   }>(),
   {
-    onlyImage: false,
-    noImage: false
+    onlyImage: false
   }
 )
+
+const firstPic = computed(() => props.item.detail.pictures?.[0])
 
 const loaded = ref(false)
 
 onBeforeMount(() => {
-  if (!props.noImage) {
-    new Promise((resolve) => {
-      const image = new Image()
+  new Promise((resolve) => {
+    const image = new Image()
 
-      image.onload = () => {
-        loaded.value = true
-        resolve(true)
-      }
+    image.onload = () => {
+      loaded.value = true
+      resolve(true)
+    }
 
-      image.onerror = (error) => {
-        console.error(error)
-        loaded.value = true
-        resolve(true)
-      }
+    image.onerror = (error) => {
+      console.error(error)
+      loaded.value = true
+      resolve(true)
+    }
 
-      image.src = props.item.detail.pictures[0].thumbnail
-    })
-  }
+    image.src = firstPic.value?.thumbnail || ''
+  })
 })
+
+const showViewer = ref(false)
 
 const handleCardClick = (item: WaterfallItem) => {
   useArtworkStore().addArtwork(item.detail)
@@ -83,15 +84,8 @@ const handleCardClick = (item: WaterfallItem) => {
   })
 }
 
-const showViewer = ref(false)
-
 const handleRightClick = (item: WaterfallItem) => {
   showViewer.value = true
-  // ImagePreview({
-  //   images: item.detail.pictures.map((pic) => pic.regular),
-  //   closeable: true,
-  //   closeOnKeyEscape: true
-  // })
 }
 </script>
 

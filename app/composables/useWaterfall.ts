@@ -1,28 +1,7 @@
-import { reactive, h, watchEffect, onActivated, onDeactivated } from 'vue'
-import { render } from 'vue'
-import WaterfallCard from '@/components/WaterfallCard.vue'
+import { reactive, watchEffect, onActivated, onDeactivated } from 'vue'
 import { Snackbar } from '@varlet/ui'
 import { useDebounceFn } from '@vueuse/core'
 import type { ArtworkListResponse, WaterfallItem } from '~/types/artwork'
-
-function getRealHeight(item: WaterfallItem, realWidth: number) {
-  if (typeof window === 'undefined') {
-    return 0
-  }
-  const container = document.createElement('div')
-  render(
-    h(WaterfallCard, {
-      item: item,
-      width: realWidth + 'px',
-      noImage: true
-    }),
-    container
-  )
-  document.body.appendChild(container)
-  const height: number = container.firstElementChild?.clientHeight ?? 0
-  document.body.removeChild(container)
-  return height
-}
 
 const useWaterfall = ({
   artistId,
@@ -43,34 +22,30 @@ const useWaterfall = ({
     loading: false,
     bottomDistance: 1000,
     onlyImage: false,
-    preloadScreenCount: [1, 3] as [number, number],
+    preloadScreenCount: [1, 1] as [number, number],
     virtual: true,
     gap: useWaterfallGap(),
     enableCache: true,
     itemMinWidth: 320,
     minColumnCount: 2,
-    maxColumnCount: 10
+    maxColumnCount: 8
   })
 
   const calcItemHeight = (item: WaterfallItem, itemWidth: number) => {
-    let extraHeight = 0
-    if (!waterfallOption.onlyImage && typeof window !== 'undefined') {
-      extraHeight = getRealHeight(item, itemWidth)
-    }
     const picture = item.detail.pictures?.[0]
     if (!picture) {
       return 0
     }
-    return picture.height * (itemWidth / picture.width) + extraHeight
+    return picture.height * (itemWidth / picture.width)
   }
 
   const fetchParams = reactive({
     page: 1,
-    page_size: 30,
+    page_size: 20,
     artist_id: artistId,
     tag: tag,
     r18: usePiniaStore().r18 ? 2 : 0,
-    limit: 30,
+    limit: 20,
     // simple: true,
     keyword: keyword,
     hybrid: hybrid,

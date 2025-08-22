@@ -16,7 +16,7 @@
       :enable-cache="waterfallOption.enableCache"
     >
       <template #default="scope">
-        <WaterfallCard v-if="scope?.item" :item="scope.item" />
+        <WaterfallCard v-if="scope?.item" :item="scope.item" :only-image="isSmall" />
       </template>
     </VirtualWaterfall>
     <div class="index-footer" v-if="result.list.length > 0">
@@ -42,6 +42,8 @@ const { containerRef } = useWaterfallContainer()
 const { waterfallOption, result, calcItemHeight } = useWaterfall({
   mode: props.mode
 })
+
+const isSmall = useSmallWindow()
 
 if (result.errorMessage) {
   showError({ statusCode: result.statusCode, statusMessage: '网站似乎挂掉了' })
