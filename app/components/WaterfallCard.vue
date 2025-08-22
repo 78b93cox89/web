@@ -89,7 +89,7 @@ const addToCache = (id: string, loaded: boolean) => {
 const firstPic = computed(() => props.item.detail.pictures?.[0])
 
 const thumbHashDataURL = computed(() => {
-  const hash = firstPic.value?.thumb_hash || '7/cJDQTnanuW95dnh4aVyRR/WPN4'
+  const hash = firstPic.value?.thumb_hash
   if (!hash) return ''
   try {
     const binary = atob(hash)
