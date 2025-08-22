@@ -66,6 +66,7 @@
 
 <script lang="ts" setup>
 import type { MyIPResponse } from '~/types/artwork'
+import { onMounted } from 'vue'
 
 const toggleR18 = () => {
   const piniaStore = usePiniaStore()

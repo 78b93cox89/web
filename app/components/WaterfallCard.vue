@@ -73,6 +73,19 @@ const props = withDefaults(
   }
 )
 
+const imageLoadCache = useState<Map<string, boolean>>('imageLoadCache', () => new Map())
+const MAX_CACHE_SIZE = 1000
+
+const addToCache = (id: string, loaded: boolean) => {
+  if (imageLoadCache.value.size >= MAX_CACHE_SIZE) {
+    const firstKey = imageLoadCache.value.keys().next().value
+    if (firstKey) {
+      imageLoadCache.value.delete(firstKey)
+    }
+  }
+  imageLoadCache.value.set(id, loaded)
+}
+
 const firstPic = computed(() => props.item.detail.pictures?.[0])
 
 const thumbHashDataURL = computed(() => {
@@ -98,14 +111,20 @@ onBeforeMount(() => {
     loaded.value = false
     return
   }
-
+  const cachedStatus = imageLoadCache.value.get(firstPic.value.id)
+  if (cachedStatus !== undefined) {
+    loaded.value = cachedStatus
+    return
+  }
   const image = new Image()
   image.onload = () => {
     loaded.value = true
+    addToCache(firstPic.value!.id, true)
   }
   image.onerror = (error) => {
     console.error(error)
     loaded.value = true
+    addToCache(firstPic.value!.id, false)
   }
   image.src = firstPic.value.thumbnail
 })

@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue'
 const props = defineProps<{
   index: number
   regular: string

@@ -1,19 +1,21 @@
 <template>
-  <var-fab drag position="right-bottom" type="primary" title="操作菜单">
-    <var-button @click="toggleAutoScroll" title="自动滚动" type="primary">
-      <Icon name="i-line-md:chevron-double-down" v-if="!isAutoScrolling" />
-      <Icon name="i-line-md:pause" v-else />
-    </var-button>
-    <var-button @click="startSlideShow" title="播放幻灯片" type="primary">
-      <Icon name="i-line-md:play" />
-    </var-button>
-  </var-fab>
+  <ClientOnly>
+    <var-fab drag position="right-bottom" type="primary" title="操作菜单">
+      <var-button @click="toggleAutoScroll" title="自动滚动" type="primary">
+        <Icon name="i-line-md:chevron-double-down" v-if="!isAutoScrolling" />
+        <Icon name="i-line-md:pause" v-else />
+      </var-button>
+      <var-button @click="startSlideShow" title="播放幻灯片" type="primary">
+        <Icon name="i-line-md:play" />
+      </var-button>
+    </var-fab>
 
-  <var-overlay v-model:show="showingSlide">
-    <div class="slide-show-content">
-      <img v-show="showingSlide" :src="currentSlideImage" height="100%" />
-    </div>
-  </var-overlay>
+    <var-overlay v-model:show="showingSlide">
+      <div class="slide-show-content">
+        <img v-show="showingSlide" :src="currentSlideImage" height="100%" />
+      </div>
+    </var-overlay>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
