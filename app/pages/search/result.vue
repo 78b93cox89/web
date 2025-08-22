@@ -24,22 +24,20 @@
         <WaterfallCard v-if="scope?.item" :item="scope.item" />
       </template>
     </VirtualWaterfall>
-    <ClientOnly>
-      <div class="index-footer" v-if="result.list.length > 0">
-        <var-divider>
-          <div
-            style="
-              font-size: large;
-              margin: 0 16px;
-              text-align: center;
-              color: hsla(var(--hsl-text), 0.8);
-            "
-          >
-            {{ tipText }}
-          </div>
-        </var-divider>
-      </div>
-    </ClientOnly>
+    <div class="index-footer" v-if="result.list.length > 0">
+      <var-divider>
+        <div
+          style="
+            font-size: large;
+            margin: 0 16px;
+            text-align: center;
+            color: hsla(var(--hsl-text), 0.8);
+          "
+        >
+          {{ tipText }}
+        </div>
+      </var-divider>
+    </div>
   </div>
 </template>
 

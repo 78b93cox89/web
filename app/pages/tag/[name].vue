@@ -21,20 +21,18 @@
         <WaterfallCard v-if="scope?.item" :item="scope.item" />
       </template>
     </VirtualWaterfall>
-    <ClientOnly>
-      <div class="index-footer" v-if="result.end && result.list.length > 0">
-        <div
-          style="
-            font-size: large;
-            margin: 0 16px;
-            text-align: center;
-            color: hsla(var(--hsl-text), 0.8);
-          "
-        >
-          ∑( 口 || 你居然看完了!
-        </div>
+    <div class="index-footer" v-if="result.end && result.list.length > 0">
+      <div
+        style="
+          font-size: large;
+          margin: 0 16px;
+          text-align: center;
+          color: hsla(var(--hsl-text), 0.8);
+        "
+      >
+        ∑( 口 || 你居然看完了!
       </div>
-    </ClientOnly>
+    </div>
   </div>
 </template>
 
@@ -52,7 +50,8 @@ useSeoMeta({
   description: `${tagName}标签下的作品 | ManyACG`,
   ogDescription: `${tagName}标签下的作品 | ManyACG`,
   twitterDescription: `${tagName}标签下的作品 | ManyACG`,
-  twitterTitle: `#${tagName} | ManyACG`,  twitterCard: 'summary'
+  twitterTitle: `#${tagName} | ManyACG`,
+  twitterCard: 'summary'
 })
 
 const { containerRef } = useWaterfallContainer()

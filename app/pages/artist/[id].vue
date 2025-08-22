@@ -31,13 +31,11 @@
           <WaterfallCard v-if="scope?.item" :item="scope.item" />
         </template>
       </VirtualWaterfall>
-      <ClientOnly>
-        <div class="index-footer" v-if="result.end && result.list.length > 0">
-          <div style="font-size: large; margin: 0 16px; text-align: center">
-            " ∑( 口 || 你居然看完了!"
-          </div>
+      <div class="index-footer" v-if="result.end && result.list.length > 0">
+        <div style="font-size: large; margin: 0 16px; text-align: center">
+          " ∑( 口 || 你居然看完了!"
         </div>
-      </ClientOnly>
+      </div>
     </div>
   </div>
 </template>
