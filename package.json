@@ -39,6 +39,7 @@
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.5.0",
     "sass-embedded": "^1.90.0",
+    "thumbhash": "^0.1.1",
     "tiny-async-pool": "^2.1.0",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"

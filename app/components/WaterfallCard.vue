@@ -7,17 +7,36 @@
       @click.right.prevent="handleRightClick(item)"
     >
       <div :data-id="item.id" class="card-content" underline="none" rel="prefetch">
-        <div class="cover">
+        <div
+          class="cover"
+          :style="{
+            aspectRatio:
+              firstPic?.width && firstPic?.height
+                ? `${firstPic.width} / ${firstPic.height}`
+                : '1 / 1'
+          }"
+        >
           <Transition>
             <img
+              v-if="thumbHashDataURL && !loaded"
+              :src="thumbHashDataURL"
+              :alt="item.detail.title"
+              class="img"
+              loading="lazy"
+            />
+          </Transition>
+          <Transition>
+            <img
+              v-if="loaded"
               :src="firstPic?.thumbnail"
               :alt="item.detail.title"
               class="img"
               loading="lazy"
-              v-if="loaded"
+              ref="cardImage"
             />
           </Transition>
         </div>
+
         <div class="overlay" v-if="!onlyImage">
           <div class="card-body">
             <h3>{{ item.detail.title }}</h3>
@@ -42,6 +61,8 @@
 
 <script setup lang="ts">
 import type { WaterfallItem } from '~/types/artwork'
+import { thumbHashToDataURL } from 'thumbhash'
+
 const props = withDefaults(
   defineProps<{
     item: WaterfallItem
@@ -54,25 +75,39 @@ const props = withDefaults(
 
 const firstPic = computed(() => props.item.detail.pictures?.[0])
 
+const thumbHashDataURL = computed(() => {
+  const hash = firstPic.value?.thumb_hash || '7/cJDQTnanuW95dnh4aVyRR/WPN4'
+  if (!hash) return ''
+  try {
+    const binary = atob(hash)
+    const buffer = new Uint8Array(binary.length)
+    for (let i = 0; i < binary.length; i++) {
+      buffer[i] = binary.charCodeAt(i)
+    }
+    return thumbHashToDataURL(buffer)
+  } catch (e) {
+    console.error('thumbHash decode error:', e)
+    return ''
+  }
+})
+
 const loaded = ref(false)
 
 onBeforeMount(() => {
-  new Promise((resolve) => {
-    const image = new Image()
+  if (!firstPic.value?.thumbnail) {
+    loaded.value = false
+    return
+  }
 
-    image.onload = () => {
-      loaded.value = true
-      resolve(true)
-    }
-
-    image.onerror = (error) => {
-      console.error(error)
-      loaded.value = true
-      resolve(true)
-    }
-
-    image.src = firstPic.value?.thumbnail || ''
-  })
+  const image = new Image()
+  image.onload = () => {
+    loaded.value = true
+  }
+  image.onerror = (error) => {
+    console.error(error)
+    loaded.value = true
+  }
+  image.src = firstPic.value.thumbnail
 })
 
 const showViewer = ref(false)
@@ -107,7 +142,8 @@ const handleRightClick = (item: WaterfallItem) => {
 
 .cover {
   width: 100%;
-  height: 100%;
+  height: auto;
+  position: relative;
 }
 
 .img {
