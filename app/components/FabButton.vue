@@ -87,7 +87,7 @@ const startSlideShow = async () => {
     cachedImages.length = 0
     resp.data.forEach((item) => {
       if (item.pictures && item.pictures.length > 0) {
-        cachedImages.push(item.pictures[0].regular)
+        cachedImages.push(item.pictures[0]!.regular)
       }
     })
   }
