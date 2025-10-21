@@ -53,7 +53,7 @@ export default defineNuxtConfig({
     url:
       process.env.SITE_URL !== undefined && process.env.SITE_URL !== ''
         ? process.env.SITE_URL
-        : 'https://manyacg.top',
+        : 'https://stp.anusd.top',
     name: 'ManyACG'
   },
 
